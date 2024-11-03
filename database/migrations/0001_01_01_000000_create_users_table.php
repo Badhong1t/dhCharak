@@ -22,12 +22,12 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('trade_license')->nullable();
             $table->enum('role', ['user', 'admin','business'])->default('user');
+            $table->string('account_type')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('island')->nullable();
             $table->text('address')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->boolean('terms')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
