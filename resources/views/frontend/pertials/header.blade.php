@@ -103,7 +103,7 @@
       </select>
       <div>
         @auth
-        <div class="header-text d-none d-lg-block">Hi, <a href="{{ route('dashboard') }}" class="text-white">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name ?? '' }}</a></div>
+        <div class="header-text d-none d-lg-block">Hi, <a href="{{auth()->check() ? (auth()->user()->role === 'admin' ? route('dashboard') : route('profile')) : route('profile')}}" class="text-white">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name ?? '' }}</a></div>
         @else
         <div class="header-text d-none d-lg-block ">Hi, Sign in</div>
          <div >
