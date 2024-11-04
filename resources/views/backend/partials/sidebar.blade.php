@@ -117,7 +117,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="" class="menu-link">
+                <a href="{{ route('subcategories.index') }}" class="menu-link">
                     <div data-i18n="Notifications">Sub Category</div>
                 </a>
             </li>

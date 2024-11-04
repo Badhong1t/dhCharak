@@ -23,20 +23,20 @@
 
 @section('content')
     <main class="container-xxl flex-grow-1 container-p-y">
-        <h2 class="section-title">Edit Category</h2>
+        <h2 class="section-title">Edit Sub Category</h2>
         <nav aria-label="breadcrumb tm-breadcumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item tm-breadcumb-item">
-                    <a href="{{ route('categories.index') }}">Categories</a>
+                    <a href="{{ route('subcategories.index') }}">Sub Categories</a>
                 </li>
                 <li class="breadcrumb-item tm-breadcumb-item active" aria-current="page">
-                    Edit Category
+                    Edit Sub Category
                 </li>
             </ol>
         </nav>
 
         <div class="addbooking-form-area">
-            <form action="{{ route('categories.update', $category->id) }}" method="POST" class="tm-form my-5">
+            <form action="{{ route('subcategories.update', $subCategory->id) }}" method="POST" class="tm-form my-5">
                 @csrf
                 @method('PUT')
 
@@ -45,16 +45,34 @@
                     <div class="form-group">
                         <label for="name" class="form-lable required">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                               id="name" name="name" value="{{ old('name', $category->name) }}" placeholder="Enter category name">
+                               id="name" name="name" value="{{ old('name', $subCategory->name) }}" placeholder="Enter category name">
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
 
+                <div class="form-field-wrapper">
+                    {{-- CategoryId Field --}}
+                    <div class="form-group mt-4">
+                        <label for="category_id" class="form-lable required">Category</label>
+                        <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" {{ $category->id == $subCategory->category_id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+
                 <div class="tm-booking-btn-wrapper" style="justify-content: start;">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ route('categories.index') }}" class="btn btn-danger">Cancel</a>
+                    <a href="{{ route('subcategories.index') }}" class="btn btn-danger">Cancel</a>
                 </div>
             </form>
         </div>

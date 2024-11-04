@@ -4,10 +4,11 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,7 @@ class CategoryController extends Controller
 
         if ($request->ajax()) {
 
-            $data = Category::all();
+            $data = SubCategory::all();
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -34,7 +35,7 @@ class CategoryController extends Controller
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="action-wrapper " >
-            <button class="action-btn outline-action-btn" title="Edit" type="button" onclick="window.location.href=\'' . route('categories.edit', $data->id) . '\'">
+            <button class="action-btn outline-action-btn" title="Edit" type="button" onclick="window.location.href=\'' . route('subcategories.edit', $data->id) . '\'">
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
              <path d="M9.94922 1.66675H8.28255C4.11589 1.66675 2.44922 3.33341 2.44922 7.50008V12.5001C2.44922 16.6667 4.11589 18.3334 8.28255 18.3334H13.2826C17.4492 18.3334 19.1159 16.6667 19.1159 12.5001V10.8334" stroke="#030C09" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
             <path d="M14.1507 2.51663L7.58408 9.0833C7.33408 9.3333 7.08408 9.82497 7.03408 10.1833L6.67575 12.6916C6.54241 13.6 7.18408 14.2333 8.09241 14.1083L10.6007 13.75C10.9507 13.7 11.4424 13.45 11.7007 13.2L18.2674 6.6333C19.4007 5.49997 19.9341 4.1833 18.2674 2.51663C16.6007 0.849966 15.2841 1.3833 14.1507 2.51663Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -54,17 +55,20 @@ class CategoryController extends Controller
                 ->make(true);
         }
 
-        return view('backend.layouts.category.index');
+        return view('backend.layouts.sub_category.index');
+
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
 
+        $categories = Category::all();
 
-        return view('backend.layouts.category.create');
+        return view('backend.layouts.sub_category.create', compact('categories'));
+
     }
 
     /**
@@ -76,14 +80,18 @@ class CategoryController extends Controller
         $request->validate([
 
             'name' => 'required|max:255|string',
+            'category_id' => 'required',
+
         ]);
 
-        $category = new Category();
-        $category->name = $request->name;
-        $category->status = 'active';
-        $category->save();
-        flash()->success('category created successfully');
-        return redirect()->route('categories.index');
+        $subcategory = new SubCategory();
+        $subcategory->name = $request->name;
+        $subcategory->category_id = $request->category_id;
+        $subcategory->status = 'active';
+        $subcategory->save();
+        flash()->success('subcategory created successfully');
+        return redirect()->route('subcategories.index');
+
     }
 
     /**
@@ -100,8 +108,10 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
 
-        $category = Category::find($id);
-        return view('backend.layouts.category.edit', compact('category'));
+        $subCategory = SubCategory::find($id);
+        $categories = Category::all();
+        return view('backend.layouts.sub_category.edit', compact('subCategory', 'categories'));
+
     }
 
     /**
@@ -111,53 +121,42 @@ class CategoryController extends Controller
     {
 
         $request->validate([
+
             'name' => 'required|max:255|string',
+            'category_id' => 'required',
+
         ]);
 
-        $category = Category::find($id);
-        $category->name = $request->name;
-        $category->save();
-        flash()->success('category updated successfully');
-        return redirect()->route('categories.index');
+        $subcategory = SubCategory::find($id);
+        $subcategory->name = $request->name;
+        $subcategory->category_id = $request->category_id;
+        $subcategory->status = 'active';
+        $subcategory->save();
+        flash()->success('subcategory updated successfully');
+        return redirect()->route('subcategories.index');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
         try {
-            $category = Category::findOrFail($id);
-            $category->delete();
+            $subCategory = SubCategory::findOrFail($id);
+            $subCategory->delete();
 
-            return response()->json(['success' => 'Category deleted successfully.']);
+            return response()->json(['success' => 'Sub category deleted successfully.']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error deleting category.'], 500);
+            return response()->json(['error' => 'Error deleting sub category.'], 500);
         }
+
     }
 
-
-    public function status(Request $request, $id)
-    {
-        // Find the blog by ID or return 404 if not found
-        $data = Category::find($id);
-        if (empty($data)) {
-            return response()->json([
-                "success" => false,
-                "message" => "Item not found."
-            ], 404);
-        }
-
-        if ($data->status == 'active') {
-            $data->status = 'inactive';
-        } else {
-            $data->status = 'active';
-        }
-
-        $data->save();
-        return response()->json([
-            'success' => true,
-            'message' => 'Item status changed successfully.'
-        ]);
+    public function status($id){
+        $subcategory = SubCategory::find($id);
+        $subcategory->status = $subcategory->status == 'active' ? 'inactive' : 'active';
+        $subcategory->save();
+        return redirect()->back();
     }
 }

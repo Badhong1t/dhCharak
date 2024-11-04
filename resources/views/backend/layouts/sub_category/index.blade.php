@@ -1,7 +1,7 @@
 @extends('backend.app')
 
 @section('title')
-    Category Page
+    Sub Category Page
 @endsection
 
 @push('style')
@@ -32,7 +32,7 @@
     <main class="container-xxl flex-grow-1 container-p-y">
         <div class="col-lg-12 mb-4 order-0">
 
-            <h2 class="section-title">Categories</h2>
+            <h2 class="section-title">Sub Categories</h2>
 
             <div class="table-container mt-4">
                 <div class="table-container p-3 border rounded shadow-sm bg-white">
@@ -47,7 +47,7 @@
                                 </svg>
                                 <input type="text" id="customSearchBox" placeholder="Search" class="form-control" />
                             </div>
-                            <a href="{{ route('categories.create') }}" class="button button-pri" type="button">
+                            <a href="{{ route('subcategories.create') }}" class="button button-pri" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none">
                                     <path d="M6 12H18" stroke="black" stroke-width="1.5" stroke-linecap="round"
@@ -55,7 +55,7 @@
                                     <path d="M12 18V6" stroke="black" stroke-width="1.5" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg>
-                                <span>Add Category</span>
+                                <span>Add Sub Category</span>
                             </a>
                         </div>
                         <thead class="table-light">
@@ -140,7 +140,7 @@
                 dom: "<'row justify-content-between table-topbar'<'col-md-2 col-sm-4 px-0'l>>tir",
 
                 ajax: {
-                    url: "{{ route('categories.index') }}",
+                    url: "{{ route('subcategories.index') }}",
                     type: "get",
                     // success: function(res) {
                     //     console.log(res)
@@ -270,7 +270,7 @@
         // Use the status change alert
         function changeStatus(event, id) {
             event.preventDefault();
-            let statusUrl = '{{ route('categories.status', ':id') }}'.replace(':id', id);
+            let statusUrl = '{{ route('subcategories.status', ':id') }}'.replace(':id', id);
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -312,7 +312,7 @@
         // Use the delete confirm alert
         function deleteRecord(event, id) {
             event.preventDefault();
-            let deleteUrl = '{{ route('categories.destroy', ':id') }}'.replace(':id', id);
+            let deleteUrl = '{{ route('subcategories.destroy', ':id') }}'.replace(':id', id);
 
             Swal.fire({
                 title: 'Are you sure?',

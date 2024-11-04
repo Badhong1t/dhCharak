@@ -36,13 +36,13 @@
         </nav>
 
         <div class="addbooking-form-area">
-            <form action="{{ route('categories.store') }}" method="POST" class="tm-form mt-5">
+            <form action="{{ route('categories.store') }}" method="POST" class="tm-form my-5">
                 @csrf
 
                 <div class="form-field-wrapper">
                     {{-- Name Field --}}
                     <div class="form-group">
-                        <label for="name" class="form-lable required">Name</label>
+                        <label for="name" class="form-lable required">Name<span class="text-danger">*</span></label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                id="name" name="name" value="{{ old('name') }}" placeholder="Enter category name">
                         @error('name')
