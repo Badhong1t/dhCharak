@@ -1,10 +1,17 @@
 <?php
 
+use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\DashboardController;
-use App\Http\Controllers\backend\AttributesController;
+use App\Http\Controllers\backend\settings\DynamicPageController;
+use App\Http\Controllers\backend\settings\ProfileController;
+use App\Http\Controllers\backend\settings\SystemController;
 use App\Http\Controllers\backend\SubCategoryController;
+use App\Models\DynamicPage;
 use Illuminate\Support\Facades\Route;
+
+
+
 
 
 Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth:web', 'admin'])->name('dashboard');
@@ -18,4 +25,26 @@ Route::post('/categories/status/{id}', [CategoryController::class, 'status'])->n
 
 //Sub Category Routes
 Route::resource('subcategories', SubCategoryController::class);
-Route::post('/subcategories/status/{id}', [SubCategoryController::class,'status'])->name('subcategories.status');
+Route::post('/subcategories/status/{id}', [SubCategoryController::class, 'status'])->name('subcategories.status');
+
+//Settings Routes
+Route::controller(ProfileController::class)->group(function () {
+
+    Route::get('/profile/index', 'index')->name('profile.index');
+
+    Route::post('/profile/update', 'update')->name('profile.update');
+
+    Route::post('/profile/password', 'updatePassword')->name('profile.password');
+    Route::post('/profilePicture/update', 'UpdateProfilePicture')->name('profilePicture.update');
+});
+
+Route::controller(SystemController::class)->group(function () {
+    Route::get('/system/index', 'index')->name('system.index');
+    Route::post('/system/update', 'update')->name('system.settingsUpdate');
+    Route::post('/system/mailSettingsUpdate', 'mailSettingsUpdate')->name('system.mailSettingsUpdate');
+    Route::post('/system/stripeSettingsUpdate', 'stripeSettingsUpdate')->name('system.stripeSettingsUpdate');
+});
+
+//Dynamic pages routes
+Route::resource('dynamicPages', DynamicPageController::class);
+Route::post('/dynamicPages/status/{id}', [DynamicPageController::class, 'changeStatus'])->name('dynamicPages.status');
