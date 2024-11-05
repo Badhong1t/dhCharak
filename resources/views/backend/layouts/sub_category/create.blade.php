@@ -38,28 +38,17 @@
         </nav>
 
         <div class="addbooking-form-area">
-            <form action="{{ route('subcategories.store') }}" method="POST" class="tm-form my-5">
+            <form action="{{ route('subcategories.store') }}" method="POST" class="tm-form">
                 @csrf
 
                 <div>
-                    {{-- Name Field --}}
-                    <div class="form-field-wrapper">
-                        <div class="form-group">
-                            <label for="name" class="form-lable required">Name<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                name="name" value="{{ old('name') }}" placeholder="Enter sub category name">
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
 
                     {{-- CategoryId Field --}}
-                    <div class="form-field-wrapper">
-                        <div class="form-group mt-4">
-                            <label for="category_id" class="form-lable required">Category<span class="text-danger">*</span></label>
+                    <div class="form-field-wrapper" style="margin-bottom: 20px;"> <!-- Add margin-bottom here -->
+                        <div class="form-group">
+                            <label for="category_id">Category<span class="text-danger">*</span></label>
                             <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
-                                name="category_id">
+                                name="category_id" style="z-index: 1; position: relative;"> <!-- Add z-index and position -->
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -69,14 +58,29 @@
                             @enderror
                         </div>
                     </div>
+
+                    {{-- Name Field --}}
+                    <div class="form-field-wrapper">
+                        <div class="form-group">
+                            <label for="name">Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" value="{{ old('name') }}" placeholder="Enter sub category name">
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="tm-booking-btn-wrapper" style="justify-content: start;">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{ route('subcategories.index') }}" class="btn btn-danger">Cancel</a>
+                <div class="button-group" style="display: flex; gap: 10px;">
+                    <button type="submit" class="tm-dashboard-btn">Add</button>
+                    <a href="{{ route('dynamicPages.index') }}" class="tm-dashboard-btn"
+                        style="text-decoration: none; background-color: red; color: #fff;">Cancel</a>
                 </div>
             </form>
         </div>
+
     </main>
 @endsection
 

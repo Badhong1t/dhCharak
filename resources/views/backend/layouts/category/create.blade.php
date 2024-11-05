@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="tm-booking-btn-wrapper" style="justify-content: start;">
+                <div class="tm-booking-btn-wrapper" style="display: flex; gap: 10px;">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <a href="{{ route('categories.index') }}" class="btn btn-danger">Cancel</a>
                 </div>

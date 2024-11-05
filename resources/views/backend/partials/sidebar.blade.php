@@ -100,14 +100,14 @@
             </ul>
         </li>
 
-        {{-- category page start --}}
+        {{-- Products page start --}}
 
     <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Products</span>
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-layout"></i>
+            <i class='menu-icon tf-icons bx bx-category-alt'></i>
           <div data-i18n="Layouts">Products</div>
         </a>
         <ul class="menu-sub">
@@ -138,6 +138,40 @@
             </li>
         </ul>
     </li>
+
+    {{-- Products page end --}}
+
+    {{-- settings page starts here --}}
+
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">Settings</span>
+    </li>
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class='menu-icon tf-icons bx bx-cog' ></i>
+          <div data-i18n="Layouts">Settings</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{{ route('profile.index') }}" class="menu-link">
+              <div data-i18n="Container">Profile Settings</div>
+            </a>
+          </li>
+            <li class="menu-item">
+                <a href="{{ route('system.index') }}" class="menu-link">
+                    <div data-i18n="Account">System Settings</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('dynamicPages.index') }}" class="menu-link">
+                    <div data-i18n="Notifications">Dynamic Page</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    {{-- settings page ends here --}}
+
     <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Pages</span>
     </li>
