@@ -28,8 +28,8 @@
         <div class="footer-col">
             <h3>About us</h3>
             <ul>
-                <li><a href="./terms.html">Terms & Conditions</a></li>
-                <li><a href="./privacy.html">Privacy Statement</a></li>
+                <li><a href="{{ route('termsAndConditions') }}">Terms & Conditions</a></li>
+                <li><a href="{{ route('privacyStatement') }}">Privacy Statement</a></li>
             </ul>
         </div>
         <div class="footer-col">

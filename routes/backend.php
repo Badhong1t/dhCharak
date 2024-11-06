@@ -3,7 +3,7 @@
 use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\DashboardController;
-use App\Http\Controllers\backend\AttributesController;
+// use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\AttributeValueController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\backend\settings\DynamicPageController;

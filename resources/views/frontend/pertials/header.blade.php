@@ -207,30 +207,30 @@
           </svg>
 
         </a>
-        <a href="./special-order.html">Special Orders</a>
+        <a href="{{ route('specialOrders') }}">Special Orders</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./how-works.html">How it Works</a>
+        <a href="{{ route('howWorks') }}">How it Works</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./handling-goods.html">Handling Frozen & Refrigerated Goods</a>
+        <a href="{{ route('handlingGoods') }}">Handling Frozen & Refrigerated Goods</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./delivery-schedule.html">Delivery Schedule</a>
+        <a href="{{ route('deliveryDetails') }}">Delivery Schedule</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./pickup-locations.html">Pickup Instruction & Locations</a>
+        <a href="{{ route('pickupLocations') }}">Pickup Instruction & Locations</a>
      </div>
     <!-- home categories container end -->

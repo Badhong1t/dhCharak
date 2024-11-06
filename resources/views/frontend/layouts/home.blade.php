@@ -55,14 +55,14 @@
       </div>
       <div class="products-container">
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-1.png') }}" alt="">
             </a>
             <div class="text-content">
               <div>
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -87,21 +87,21 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
             </div>
           </div>
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-2.png') }}" alt="">
             </a>
             <div class="text-content">
               <div>
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -126,21 +126,21 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
             </div>
           </div>
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-3.png') }}" alt="">
             </a>
             <div class="text-content">
               <div>
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -165,21 +165,21 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
             </div>
           </div>
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-4.png') }}" alt="">
             </a>
             <div class="text-content">
               <div class="text-content-top" >
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -204,21 +204,21 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
             </div>
           </div>
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-1.png') }}" alt="">
             </a>
             <div class="text-content">
               <div>
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -243,21 +243,21 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
             </div>
           </div>
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-2.png') }}" alt="">
             </a>
             <div class="text-content">
               <div>
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -282,21 +282,21 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
             </div>
           </div>
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-3.png') }}" alt="">
             </a>
             <div class="text-content">
               <div>
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -321,21 +321,21 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
             </div>
           </div>
           <div class="item">
-            <a href="./product-details.html" class="img-content">
+            <a href="{{ route('productDetails') }}" class="img-content">
               <img src="{{ asset('frontend/assets/images/product-4.png') }}" alt="">
             </a>
             <div class="text-content">
               <div class="text-content-top" >
                 <div class="d-flex align-items-center gap-2 flex-wrap justify-content-between ">
                   <div >
-                    <a class="title" href="./product-details.html">Bosh BT Earphone</a>
+                    <a class="title" href="{{ route('productDetails') }}">Bosh BT Earphone</a>
                   </div>
                   <div class="price">$29</div>
                 </div>
@@ -360,7 +360,7 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="" class="action-btn">
+                <a href="{{ route('cart') }}" class="action-btn">
                   Add to cart
                 </a>
               </div>
@@ -369,7 +369,7 @@
       </div>
 
       <div class="d-flex justify-content-center mt-3 mt-lg-5" >
-        <a href="./products.html" class="section-btn mt-5">See More</a>
+        <a href="{{ route('products') }}" class="section-btn mt-5">See More</a>
        </div>
      </div>
 
