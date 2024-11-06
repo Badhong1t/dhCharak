@@ -1,71 +1,63 @@
 @extends('backend.app')
+
+@section('title', 'Create Product')
+
 @push('style')
+    <style>
+        .text-center {
+                text-align: end;
+            }
 
+            .table-topbar {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 40px;
+            }
+
+            .dataTables_info {
+                margin-top: 20px;
+            }
+    </style>
 @endpush
-
-@section('title', 'Attribute Value Page')
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
-        <div class="col-lg-9 mb-4 order-0">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Attribute Values</h2>
-                </div>
-                <div class="card-body">
-                    <h4 class="card-title">{{ $attribute->name }}</h4>
-                    <div class="table-responsive mt-4 p-4">
-                        <table class="table table-hover table-striped table-bordered" id="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Sl</th>
-                                    <th>Value</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+        <div class="col-lg-12 col-md-4 order-1">
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Product List
+                            <a href="{{ route('products.create') }}" class="btn btn-primary" style="float: right">Add Product</a>
+                        </h4>
+                        <div class="table-responsive mt-4 p-4">
+                            <table class="table table-hover table-striped table-bordered" id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Thumbnail</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Sub Category</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Stock</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-          <div class="col-lg-3 col-md-4 order-1">
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Add Value</h4>
-                        <form action="{{ route('attribute_values.store') }}" method="POST" class="mt-4">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <label for="name" class="form-lable">Attribute Name <span class="text-danger">*</span></span></label>
-                                <input type="text" id="name" class="form-control" name="" value="{{ $attribute->name }}" readonly>
-                                <input type="text" name="attribute_id" value="{{ $attribute->id }}" hidden>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="name" class="form-lable">Value <span class="text-danger">*</span></span></label>
-                                <input type="text" id="name" class="form-control @error('value') is-invalid @enderror" name="value">
-                                @error('value')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="name" class="form-lable">Type <span class="text-danger">*</span></span></label>
-                                <input type="text" id="name" class="form-control" name="type" value="{{ $attribute->name }}" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                  </div>
-            </div>
-          </div>
     </div>
 </div>
-@endsection
+@endSection
 
 @push('script')
     <script src="{{ asset('backend/js/datatables/data-tables.min.js') }}"></script>
@@ -109,7 +101,7 @@
                 pagingType: "full_numbers",
                 dom: "<'row justify-content-between table-topbar'<'col-md-2 col-sm-4 px-0'l><'col-md-2 col-sm-4 px-0'f>>tipr",
                 ajax: {
-                    url: "{{ route('attributes.show', $attribute->id ) }}",
+                    url: "{{ route('products.index') }}",
                     type: "get",
                 },
 
@@ -120,8 +112,50 @@
                         searchable: false
                     },
                     {
-                        data: 'value',
-                        name: 'value',
+                        data: 'thumbnail',
+                        name: 'thumbnail',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'title',
+                        name: 'title',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'category',
+                        name: 'category',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'subcategory',
+                        name: 'subcategory',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'customer_price',
+                        name: 'customer_price',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'quntity',
+                        name: 'quntity',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'stock',
+                        name: 'stock',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
                         orderable: true,
                         searchable: true
                     },
@@ -161,7 +195,7 @@
     };
     // Delete Button
     function deleteItem(id) {
-        var url = '{{ route('attribute_values.destroy', ':id') }}';
+        var url = '{{ route('attributes.destroy', ':id') }}';
         var csrfToken = '{{ csrf_token() }}';
         $.ajax({
             type: "DELETE",
@@ -194,3 +228,5 @@
     }
 </script>
 @endpush
+
+

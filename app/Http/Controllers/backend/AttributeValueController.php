@@ -37,6 +37,7 @@ class AttributeValueController extends Controller
             AttributeValue::create([
                 'value' => $request->value,
                 'attribute_id' => $request->attribute_id, // Assuming attribute_id is passed in request
+                'type' => $request->type
             ]);
             flash()->success(__('Attribute value created successfully.'));
             return redirect()->back();
@@ -116,5 +117,10 @@ class AttributeValueController extends Controller
             return redirect()->back();
         }
 
+    }
+
+    public function getattributeValues($id){
+        $attributeValues = AttributeValue::where('attribute_id', $id)->get();
+        return response()->json($attributeValues);
     }
 }
