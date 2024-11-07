@@ -20,6 +20,8 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/product-details', 'productDetails')->name('productDetails');
     Route::get('/my-cart', 'cart')->name('cart');
     Route::get('/checkout', 'checkout')->name('checkout');
+    Route::get('/orders', 'orders')->name('orders');
+    Route::get('/account-details', 'accountDetails')->name('accountDetails');
 });
 
 

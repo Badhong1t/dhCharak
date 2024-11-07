@@ -1,17 +1,19 @@
 <?php
 
 use App\Http\Controllers\backend\AttributesController;
-use App\Http\Controllers\backend\CategoryController;
-use App\Http\Controllers\backend\DashboardController;
-// use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\AttributeValueController;
+use App\Http\Controllers\backend\CategoryController;
+// use App\Http\Controllers\backend\AttributesController;
+use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\backend\settings\DynamicPageController;
 use App\Http\Controllers\backend\settings\ProfileController;
+use App\Http\Controllers\backend\settings\SocialLinkController;
 use App\Http\Controllers\backend\settings\SystemController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Models\DynamicPage;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -65,3 +67,7 @@ Route::controller(SystemController::class)->group(function () {
 //Dynamic pages routes
 Route::resource('dynamicPages', DynamicPageController::class);
 Route::post('/dynamicPages/status/{id}', [DynamicPageController::class, 'changeStatus'])->name('dynamicPages.status');
+
+//Social Link routes
+Route::resource('socialLinks', SocialLinkController::class);
+Route::post('/socialLinks/status/{id}', [SocialLinkController::class, 'changeStatus'])->name('socialLinks.status');

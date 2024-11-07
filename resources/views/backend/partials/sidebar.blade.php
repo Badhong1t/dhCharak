@@ -167,6 +167,11 @@
                     <div data-i18n="Notifications">Dynamic Page</div>
                 </a>
             </li>
+            <li class="menu-item">
+                <a href="{{ route('socialLinks.index') }}" class="menu-link">
+                    <div data-i18n="Notifications">Social Link</div>
+                </a>
+            </li>
         </ul>
     </li>
 

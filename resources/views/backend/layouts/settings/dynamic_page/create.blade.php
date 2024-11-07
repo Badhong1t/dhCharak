@@ -54,7 +54,7 @@
                     {{-- page_content input field --}}
                     <div class="form-group">
                         <label for="page_content">Page Content</label>
-                        <textarea name="page_content" class="ck-editor form-control @error('page_content') is-invalid @enderror" placeholder="Enter your page_content">{{ old('page_content') }}</textarea>
+                        <textarea name="page_content" class="ck-editor form-control @error('page_content') is-invalid @enderror">{{ old('page_content') }}</textarea>
                         @error('page_content')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
