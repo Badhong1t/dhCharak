@@ -17,7 +17,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/privacy-statement', 'privacyStatement')->name('privacyStatement');
     Route::get('/terms-and-conditions', 'termsAndConditions')->name('termsAndConditions');
     Route::get('/products', 'products')->name('products');
-    Route::get('/product-details', 'productDetails')->name('productDetails');
+    Route::get('/product-details/{slug}', 'productDetails')->name('productDetails');
     Route::get('/my-cart', 'cart')->name('cart');
     Route::get('/checkout', 'checkout')->name('checkout');
 });

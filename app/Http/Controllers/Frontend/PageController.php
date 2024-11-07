@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -10,7 +11,32 @@ class PageController extends Controller
 
     public function home()
     {
-        return view('frontend.layouts.home');
+        $products = Product::where('status', 'active')->limit(12)->get();
+        return view('frontend.layouts.home', compact('products'));
+    }
+    public function products(){
+
+        return view('frontend.layouts.products.index');
+
+    }
+
+    public function productDetails($slug){
+
+        $product = Product::with(['attribute_value','images'])->where('slug', $slug)->first();
+
+        return view('frontend.layouts.product_details.index', compact('product'));
+
+    }
+    public function cart(){
+
+        return view('frontend.layouts.my_cart.index');
+
+    }
+
+    public function checkout(){
+
+        return view('frontend.layouts.checkout.index');
+
     }
 
     public function specialOrders(){
@@ -62,30 +88,6 @@ class PageController extends Controller
 
     }
 
-    public function products(){
-
-
-        return view('frontend.layouts.products.index');
-
-    }
-
-    public function productDetails(){
-
-        return view('frontend.layouts.product_details.index');
-
-    }
-
-    public function cart(){
-
-        return view('frontend.layouts.my_cart.index');
-
-    }
-
-    public function checkout(){
-
-        return view('frontend.layouts.checkout.index');
-
-    }
 
 
 }

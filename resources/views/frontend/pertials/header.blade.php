@@ -129,72 +129,27 @@
 
     <!-- home categories list start -->
     <div class="home-categories-list">
+    @if($categories->count() > 0)
+      @foreach($categories as $item)
       <div>
         <div class="title">
-          Grocery
+          {{ $item->name ?? '' }}
         </div>
+        @php
+          $subCategories = DB::table('sub_categories')->where('category_id', $item->id)->get();
+        @endphp
         <div class="items">
-          <a href="./products.html">Fresh Food</a>
-          <a href="./products.html">Snacks</a>
-          <a href="./products.html">Candy</a>
-          <a href="./products.html">Beverages</a>
+            @if($subCategories->count() > 0)
+            @foreach ($subCategories as $subCategory)
+                <a href="./products.html">{{ $subCategory->name ?? '' }}</a>
+            @endforeach
+            @endif
         </div>
+
       </div>
-      <div>
-        <div class="title">
-          Home
-        </div>
-        <div class="items">
-          <a href="./products.html">Furniture</a>
-          <a href="./products.html">Mattress</a>
-          <a href="./products.html">Bedding</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Health
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Electronics
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Seasonal
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Household
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
+      @endforeach
+    @endif
+
     </div>
     <!-- home categories list end -->
 

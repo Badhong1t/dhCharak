@@ -14,8 +14,6 @@ class Product extends Model
         'slug',
         'sku',
         'barcode',
-        'attribute_id',
-        'attribute_value_id',
         'customer_price',
         'business_price',
         'quantity',
@@ -35,4 +33,13 @@ class Product extends Model
     {
         return $this->belongsTo(SubCategory::class, 'subcategory_id');
     }
+    public function attribute_value()
+    {
+        return $this->hasMany(ProductAttribute::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
 }

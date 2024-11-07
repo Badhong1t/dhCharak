@@ -37,6 +37,7 @@ Route::post('/subcategories/status/{id}', [SubCategoryController::class,'status'
 //product Routes
 Route::middleware(['auth:web', 'admin'])->prefix('admin')->group(function () {
     Route::resource('products', ProductController::class);
+    Route::post('/products/status/{id}', [ProductController::class, 'Status'])->name('product.status');
 });;
  //Golbal Route Here---------
  Route::get('/get-sub-category/{id}', [ProductController::class, 'getSubcategory']);
