@@ -24,11 +24,20 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $request->authenticate();
+            $request->session()->regenerate();
+            flash()->success('Login Successfully');
+            if (Auth::user()->role == 'admin') {
+                return redirect()->intended(route('dashboard', absolute: false));
+            }else{
+                return redirect()->intended(route('home', absolute: false));
+            }
+        }else{
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
+        }
     }
 
     /**
@@ -41,7 +50,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
+        flash()->success('Logout Successfully');
         return redirect('/');
     }
 }

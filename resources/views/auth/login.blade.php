@@ -1,47 +1,77 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('frontend.main')
+    @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/owl.carousel.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/owl.theme.default.min.cs') }}s" />
+    <link rel="stylesheet" type="text/css" href="{{ ('frotend/assets/css/plugins/magnific-popup.min.css') }}" />
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+    <!-- All custom CSS Links -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/helper.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/responsive.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/tarek.css') }}" />
+    @endpush
+@section('title', 'Login')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+@section('content')
+<main>
+    <section class="common-container log-in-section">
+        <div class="login-container">
+            <div class="tm-login-logo">
+              <img src="{{ asset('frontend') }}/assets/images/logo-yellow.svg" alt="Bulksail Logo">
+            </div>
+            <div class="login-heading-para-wrapper">
+                <h1 class="common-heading">Welcome to Bulksail!</h1>
+            <p class="common-para">
+              Log in to easily manage your account, track your orders, and explore a wide range of products from leading distributors.
+              Whether you're a business or consumer, we're here to make sourcing and logistics hassle-free.
+            </p>
+            </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <form class="login-form" action="{{ route('login') }}" method="POST">
+                @csrf
+              <div class="login-form-common-text">
+                <h2 class="common-heading-2">Login</h2>
+              <p class="common-para">Don't have an account? <a class="common-para" href="{{ route('register') }}">Create here</a></p>
+              </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+              <div class="tm-form-main-input-wrapper">
+                <div class="tm-input-group">
+                    <label for="email">User name or Email<span>*</span></label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" class="{{$errors->has('email') ? 'form-control is-invalid' : ''}}">
+                    @error('email')
+                    <div class="invalid-feedback d-block">{{$message}}</div>
+                    @enderror
+                  </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                  <div class="tm-input-group">
+                    <label for="password">Your password<span>*</span></label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" class="{{$errors->has('password') ? 'form-control is-invalid' : ''}}">
+                    @error('password')
+                    <div class="invalid-feedback d-block">{{$message}}</div>
+                    @enderror
+                  </div>
+              </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+              <div class="options">
+                <label class="checkbox style-c tm-style-c-checkbox" id="remember-me">
+                  <input type="checkbox" name="remember" id="remember" />
+                  <div class="checkbox__checkmark"></div> Remember me
+                </label>
+                @error('remember')
+                   <div class="invalid-feedback d-block">{{$message}}</div>
+                @enderror
+                <a href="#" class="forgot-password">Forgot password?</a>
+              </div>
+              <button type="submit" class="common-btn-2 w-100">Log in</button>
+            </form>
+          </div>
+    </section>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+</main>
+@endsection
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@push('scripts')
+      <script src="{{ asset('frontend/assets/js/owl.carousel.min.js') }}"></script>
+      <script src="{{ asset('frontend/assets/js/tarek.js') }}"></script>
+@endpush
+
