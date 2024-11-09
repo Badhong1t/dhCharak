@@ -317,7 +317,7 @@
         let imageSectionCount = 0
         $('#add-gallery-image').click(function() {
             imageSectionCount++
-            $('#gallery-images-section').append(`<div class="col-lg-4 position-relative single-gallery-image">
+            $('#gallery-images-section').append(`<div class="col-lg-4 position-relative single-gallery-image mb-2">
              <button type="button" class="remove-gallery-section p-1 bg-danger text-white position-absolute" style="top: 0; right: -2px; z-index: 999; border-radius: 50%; border: 0">
                  <i class='bx bx-x'></i>
              </button>

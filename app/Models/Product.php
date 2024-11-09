@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Product extends Model
 {
 
@@ -41,5 +41,8 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class);
     }
-
+    public function attributes()
+    {
+        return $this->belongsToMany(Attribute::class,'product_attributes','product_id','attribute_id');
+    }
 }

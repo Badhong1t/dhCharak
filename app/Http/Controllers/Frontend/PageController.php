@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -15,16 +18,17 @@ class PageController extends Controller
         return view('frontend.layouts.home', compact('products'));
     }
     public function products(){
-
-        return view('frontend.layouts.products.index');
+        $products = Product::where('status', 'active')->get();
+        $categories = Category::all();
+        return view('frontend.layouts.products.index',compact('products', 'categories'));
 
     }
 
     public function productDetails($slug){
 
         $product = Product::with(['attribute_value','images'])->where('slug', $slug)->first();
-
-        return view('frontend.layouts.product_details.index', compact('product'));
+        $related_products = Product::where('category_id', $product->category_id)->limit(8)->get();
+        return view('frontend.layouts.product_details.index', compact('product', 'related_products'));
 
     }
     public function cart(){
