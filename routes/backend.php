@@ -4,6 +4,9 @@ use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\AttributeValueController;
 use App\Http\Controllers\backend\CategoryController;
 // use App\Http\Controllers\backend\AttributesController;
+use App\Http\Controllers\backend\CMS\HandlingFrozenGoods;
+use App\Http\Controllers\backend\CMS\HowItWork;
+use App\Http\Controllers\backend\CMS\WhyChooseBulksail;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\backend\settings\DynamicPageController;
@@ -13,6 +16,9 @@ use App\Http\Controllers\backend\settings\SystemController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Models\DynamicPage;
 use Illuminate\Support\Facades\Route;
+
+
+
 
 
 
@@ -71,3 +77,16 @@ Route::post('/dynamicPages/status/{id}', [DynamicPageController::class, 'changeS
 //Social Link routes
 Route::resource('socialLinks', SocialLinkController::class);
 Route::post('/socialLinks/status/{id}', [SocialLinkController::class, 'changeStatus'])->name('socialLinks.status');
+
+//CMS routes
+Route::resource('handlingFrozenGoods', HandlingFrozenGoods::class);
+Route::post('/handlingFrozenGoods/update', [HandlingFrozenGoods::class, 'handlingFrozenGoodsUpdate'])->name('handlingFrozenGoodsUpdate');
+Route::post('/handlingFrozenGoods/status/{id}', [HandlingFrozenGoods::class, 'status'])->name('handlingFrozenGoodsStatus');
+
+Route::resource('whyChooseBulksail', WhyChooseBulksail::class);
+Route::post('/whyChooseBulksail/update', [WhyChooseBulksail::class, 'whyChooseBulksailUpdate'])->name('whyChooseBulksailUpdate');
+Route::post('/whyChooseBulksail/status/{id}', [WhyChooseBulksail::class, 'status'])->name('whyChooseBulksailStatus');
+
+Route::resource('howItWorks', HowItWork::class);
+Route::post('/howItWorks/update', [HowItWork::class, 'howItWorksUpdate'])->name('howItWorksUpdate');
+Route::post('/howItWorks/status/{id}', [HowItWork::class, 'status'])->name('howItWorksStatus');
