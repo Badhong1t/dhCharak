@@ -141,7 +141,7 @@
         <div class="items">
             @if($subCategories->count() > 0)
             @foreach ($subCategories as $subCategory)
-                <a href="./products.html">{{ $subCategory->name ?? '' }}</a>
+                <a href="{{ route('subcategorywise.product',$subCategory->id) }}">{{ $subCategory->name ?? '' }}</a>
             @endforeach
             @endif
         </div>

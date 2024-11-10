@@ -47,10 +47,7 @@
                     </div>
 
                 </div>
-
-
                 <div class="form-field-wrapper">
-
                     {{-- page_content input field --}}
                     <div class="form-group">
                         <label for="page_content">Page Content</label>

@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class PageController extends Controller
 {
 
@@ -27,9 +27,17 @@ class PageController extends Controller
     public function productDetails($slug){
 
         $product = Product::with(['attribute_value','images'])->where('slug', $slug)->first();
-        $related_products = Product::where('category_id', $product->category_id)->limit(8)->get();
-        return view('frontend.layouts.product_details.index', compact('product', 'related_products'));
 
+        $product_attributes = ProductAttribute::with('value')->where('product_id', $product->id)->get();
+
+        $related_products = Product::where('category_id', $product->category_id)->limit(8)->get();
+        return view('frontend.layouts.product_details.index', compact('product', 'related_products', 'product_attributes'));
+
+    }
+    public function productsBySubcategory($id){
+
+        $products = Product::where('status', 'active')->where('subcategory_id', $id)->get();
+        return view('frontend.layouts.products.subcategory_product', compact('products'));
     }
     public function cart(){
 

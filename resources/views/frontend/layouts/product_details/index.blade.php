@@ -12,6 +12,25 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/tarek.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/product.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/responsive.css') }}" />
+    <style>
+        .sizes-container .color {
+            height: 34px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            border: 1px solid #f2f2f2;
+            text-transform: uppercase;
+            color: #4d4d4d;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+            cursor: pointer;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -45,13 +64,31 @@
             <div class="sizes-container">
                 <input id="product-size" value="" type="hidden" name="product-size">
                 <div class="title">Size:</div>
-                @if ($product->attribute_value->count() > 0)
-                    @foreach ($product->attribute_value as $key => $attribute_value)
-                        <div id="{{ $attribute_value->value->id }}" class="size {{ $key == 0 ? 'active' : '' }}">
-                            {{  $attribute_value->value->value ?? '' }}</div>
+                @if ($product_attributes->count() > 0)
+                    @foreach ($product_attributes as $key => $attribute_value)
+                        @if ($attribute_value->value->type === 'Size')
+                            <div id="{{ $attribute_value->value->id }}" class="size {{ $key == 0 ? 'active' : '' }}">
+                                {{ $attribute_value->value->value }}
+                            </div>
+                        @endif
                     @endforeach
                 @endif
             </div>
+
+            <div class="sizes-container mt-3">
+                <input id="product-color" value="" type="hidden" name="product-color">
+                <div class="title mt-3">Color:</div>
+                @if ($product_attributes->count() > 0)
+                    @foreach ($product_attributes as $key => $attribute_value)
+                        @if ($attribute_value->value->type === 'Color')
+                            <div id="{{ $attribute_value->value->id }}" class="color {{ $key == 0 ? 'active' : '' }} mt-3" >
+                                {{ $attribute_value->value->value }}
+                            </div>
+                        @endif
+                    @endforeach
+                @endif
+            </div>
+
             <div class="product-details-quantity-container d-flex align-items-center gap-3 mt-5 mb-3">
                 <div id="product-details-minus-btn" class="decrease-btn">-</div>
                 <div class="product-details-quantity">

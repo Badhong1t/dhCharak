@@ -151,6 +151,23 @@ class ProductController extends Controller
                     }
                 }
             }
+            if($request->product_attribute && is_array($request->product_attribute)){
+                foreach ($request->product_attribute as $attribute) {
+                    if (isset($attribute['attribute_id']) && isset($attribute['attribute_value_id'])) {
+                        $attributeValues = is_array($attribute['attribute_value_id'])
+                            ? $attribute['attribute_value_id']
+                            : [$attribute['attribute_value_id']];
+                        // Save each value
+                        foreach ($attributeValues as $valueId) {
+                            ProductAttribute::create([
+                                'product_id' => $product->id,
+                                'attribute_id' => $attribute['attribute_id'],
+                                'value_id' => $valueId,
+                            ]);
+                        }
+                    }
+                }
+            }
             flash()->success(__('Product created successfully.'));
             return redirect()->route('products.index');
         } catch (\Exception $e) {
@@ -173,7 +190,6 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::with(['images','attribute_value','attributes'])->find($id);
-        // dd($product);
         if (!$product) {
             flash()->error(__('Product not found.'));
             return redirect()->back();
@@ -208,7 +224,7 @@ class ProductController extends Controller
 
 
         ]);
-        $product = Product::with('images')->findOrFail($id);
+        $product = Product::with('images','attribute_value','attributes')->findOrFail($id);
         if (!$product) {
             flash()->error(__('Product not found.'));
             return redirect()->back();
@@ -256,14 +272,21 @@ class ProductController extends Controller
                     $attributeValues = is_array($attribute['attribute_value_id'])
                         ? $attribute['attribute_value_id']
                         : [$attribute['attribute_value_id']];
-                    // Save each value
+
+                    // Use updateOrCreate to handle updates or insertions
                     foreach ($attributeValues as $valueId) {
-                        ProductAttribute::updateOrCreate([
-                            'id' => $attribute['id']?? null,  // Check if id exists, if yes then update, else create new
-                            'product_id' => $product->id,
-                            'attribute_id' => $attribute['attribute_id'],
-                            'value_id' => $valueId,
-                        ]);
+                        ProductAttribute::updateOrCreate(
+                            [
+                                'product_id' => $product->id,
+                                'attribute_id' => $attribute['attribute_id'],
+                                'value_id' => $valueId,
+                            ],
+                            [
+                                'product_id' => $product->id,
+                                'attribute_id' => $attribute['attribute_id'],
+                                'value_id' => $valueId,
+                            ]
+                        );
                     }
                 }
             }
@@ -354,6 +377,31 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Attribute deleted successfully.'
+        ]);
+    }
+
+    public function imageDelete(Request $request, $id)
+    {
+        $data = ProductImage::find($id);
+
+        if (empty($data)) {
+            return response()->json([
+                "success" => false,
+                "message" => "Item not found."
+            ], 404);
+        }
+
+        // Delete the image file from storage
+        if (file_exists(public_path($data->image_url))) {
+            Helper::fileDelete(public_path($data->image_url));
+        }
+
+        // Delete the record from the database
+        $data->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Image deleted successfully.'
         ]);
     }
 
