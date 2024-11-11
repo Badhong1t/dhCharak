@@ -5,7 +5,10 @@ use App\Http\Controllers\backend\AttributeValueController;
 use App\Http\Controllers\backend\CategoryController;
 // use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\CMS\HandlingFrozenGoods;
+use App\Http\Controllers\backend\CMS\HowDeliveryWorks;
 use App\Http\Controllers\backend\CMS\HowItWork;
+use App\Http\Controllers\backend\CMS\PickupInstructions;
+use App\Http\Controllers\backend\CMS\SpecialOrders;
 use App\Http\Controllers\backend\CMS\WhyChooseBulksail;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
@@ -16,6 +19,9 @@ use App\Http\Controllers\backend\settings\SystemController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Models\DynamicPage;
 use Illuminate\Support\Facades\Route;
+
+
+
 
 
 
@@ -90,3 +96,16 @@ Route::post('/whyChooseBulksail/status/{id}', [WhyChooseBulksail::class, 'status
 Route::resource('howItWorks', HowItWork::class);
 Route::post('/howItWorks/update', [HowItWork::class, 'howItWorksUpdate'])->name('howItWorksUpdate');
 Route::post('/howItWorks/status/{id}', [HowItWork::class, 'status'])->name('howItWorksStatus');
+
+Route::resource('specialOrders', SpecialOrders::class);
+Route::post('/specialOrders/update', [SpecialOrders::class, 'specialOrdersUpdate'])->name('specialOrdersUpdate');
+Route::post('/specialOrders/status/{id}', [SpecialOrders::class, 'status'])->name('specialOrdersStatus');
+
+Route::get('/howDeliveryWorks', [HowDeliveryWorks::class, 'index'])->name('howDeliveryWorks');
+Route::post('/howDeliveryWorks/update', [HowDeliveryWorks::class, 'howDeliveryWorksUpdate'])->name('howDeliveryWorksUpdate');
+Route::post('/howDeliveryWorksImage/update', [HowDeliveryWorks::class, 'updateImages'])->name('howDeliveryWorksImage.update');
+
+Route::get('/pickupInstructions', [PickupInstructions::class, 'index'])->name('pickupInstructions');
+Route::post('/pickupInstructions/update', [PickupInstructions::class, 'pickupInstructionsUpdate'])->name('pickupInstructionsUpdate');
+Route::post('/pickupInstructionsImage/update', [PickupInstructions::class, 'updateImages'])->name('pickupInstructionsImage.update');
+

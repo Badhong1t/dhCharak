@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\backend\CMS;
 
+use App\Helpers\Helper;
 use App\Enums\page;
 use App\Enums\section;
 use App\Http\Controllers\Controller;
 use App\Models\CMS;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Helpers\Helper;
 
-class HowItWork extends Controller
+class SpecialOrders extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class HowItWork extends Controller
 
         if($request->ajax()){
 
-            $data = CMS::where('page', page::HowItWorks)->where('section_name', section::HowItWorksSectionDynamic)->get();
+            $data = CMS::where('page', page::SpecialOrders)->where('section_name', section::SpecialOrdersSectionDynamic)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('icon', function ($data) {
@@ -40,7 +40,7 @@ class HowItWork extends Controller
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                <a href="' . route('howItWorks.edit', $data->id) . '" type="button" class="btn btn-primary text-white" title="Edit">
+                                <a href="' . route('specialOrders.edit', $data->id) . '" type="button" class="btn btn-primary text-white" title="Edit">
                                   <i class="bx bx-pencil"></i>
                                 </a>
                                 <a href="#" onclick="deleteRecord(event,' . $data->id . ')" type="button" class="btn btn-danger text-white" title="Delete">
@@ -53,9 +53,9 @@ class HowItWork extends Controller
 
         }
 
-        $data = CMS::where('page', page::HowItWorks)->where('section_name', section::HowItWorksSectionStatic)->first();
+        $data = CMS::where('page', page::SpecialOrders)->where('section_name', section::SpecialOrdersSectionStatic)->first();
 
-        return view('backend.layouts.cms.how_it_works.index', compact('data'));
+        return view('backend.layouts.cms.special_orders.index', compact('data'));
 
     }
 
@@ -65,7 +65,7 @@ class HowItWork extends Controller
     public function create()
     {
 
-        return view('backend.layouts.cms.how_it_works.create');
+        return view('backend.layouts.cms.special_orders.create');
 
     }
 
@@ -78,7 +78,6 @@ class HowItWork extends Controller
         $request->validate([
 
             'title' => 'required|string|max:255',
-            'sub_title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpg,jpeg,png,svg,gif|max:2048',
 
@@ -88,10 +87,9 @@ class HowItWork extends Controller
 
         if ($data) {
 
-            $data->page = page::HowItWorks;
-            $data->section_name = section::HowItWorksSectionDynamic;
+            $data->page = page::SpecialOrders;
+            $data->section_name = section::SpecialOrdersSectionDynamic;
             $data->title = $request->title;
-            $data->sub_title = $request->sub_title;
             $data->description = $request->description;
             $data->image = Helper::fileUpload($request->file('image'), 'cms/how-it-works', getFileName($request->file('image')));
             $data->status = 'active';
@@ -103,12 +101,13 @@ class HowItWork extends Controller
 
             $data->save();
 
-            flash()->success('How It works updated successfully');
-            return redirect()->route('howItWorks.index');
+            flash()->success('Special Orders created successfully');
+            return redirect()->route('specialOrders.index');
 
         }
+
         flash()->error('Something went wrong. Please try again.');
-        return redirect()->route('howItWorks.index');
+        return redirect()->route('specialOrders.index');
 
     }
 
@@ -127,7 +126,7 @@ class HowItWork extends Controller
     {
 
         $data = CMS::find($id);
-        return view('backend.layouts.cms.how_it_works.edit', compact('data'));
+        return view('backend.layouts.cms.special_orders.edit', compact('data'));
 
     }
 
@@ -140,7 +139,6 @@ class HowItWork extends Controller
         $request->validate([
 
             'title' => 'required|string|max:255',
-            'sub_title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpg,jpeg,png,svg,gif|max:2048',
 
@@ -150,22 +148,28 @@ class HowItWork extends Controller
 
         if ($data) {
 
-            $data->page = page::HowItWorks;
-            $data->section_name = section::HowItWorksSectionDynamic;
+            $data->page = page::SpecialOrders;
+            $data->section_name = section::SpecialOrdersSectionDynamic;
             $data->title = $request->title;
-            $data->sub_title = $request->sub_title;
             $data->description = $request->description;
             $data->image = Helper::fileUpload($request->file('image'), 'cms/how-it-works', getFileName($request->file('image')));
             $data->status = 'active';
 
+            /* if ($request->hasFile('image')) {
+                $file = Helper::fileUpload($request->file('image'), 'cms/handling-frozen-goods', getFileName($request->file('image')));
+                $data->image = $file;
+            } */
+
             $data->save();
 
-            flash()->success('How It works updated successfully');
-            return redirect()->route('howItWorks.index');
+            flash()->success('Special Orders updated successfully');
+            return redirect()->route('specialOrders.index');
 
         }
+
         flash()->error('Something went wrong. Please try again.');
-        return redirect()->route('howItWorks.index');
+        return redirect()->route('specialOrders.index');
+
 
     }
 
@@ -174,6 +178,7 @@ class HowItWork extends Controller
      */
     public function destroy(string $id)
     {
+
         $data = CMS::find($id);
         if (!$data) {
             flash()->error(__('CMS not found.'));
@@ -189,9 +194,10 @@ class HowItWork extends Controller
             flash()->error($e->getMessage());
             return redirect()->back();
         }
+
     }
 
-    public function howItWorksUpdate(Request $request){
+    public function specialOrdersUpdate(Request $request){
 
         $request->validate([
 
@@ -202,37 +208,23 @@ class HowItWork extends Controller
 
 
 
-        CMS::updateOrCreate(['page' => page::HowItWorks], [
+        CMS::updateOrCreate(['page' => page::SpecialOrders], [
 
-            'page' => page::HowItWorks,
-            'section_name' => section::HowItWorksSectionStatic,
+            'page' => page::SpecialOrders,
+            'section_name' => section::SpecialOrdersSectionStatic,
             'title' => $request->title,
             'short_description' => $request->short_description,
             // 'image' => Helper::fileUpload($request->file('image'), 'cms/handling-frozen-goods', getFileName($request->file('image'))),
 
         ]);
 
-        /* $data = CMS::find($id);
-
-        if ($data) {
-
-            $data->title = $request->title;
-            $data->description = $request->description;
-
-            if ($request->hasFile('image')) {
-                $file = Helper::fileUpload($request->file('image'), 'cms/handling-frozen-goods', getFileName($request->file('image')));
-                $data->image = $file;
-            }
-
-            $data->save(); */
-
-        flash()->success('How It works updated successfully');
-        return redirect()->route('howItWorks.index');
+        flash()->success('Special Orders updated successfully');
+        return redirect()->route('specialOrders.index');
 
     }
 
-    public function status($id)
-    {
+    public function status($id) {
+
         // Find the blog by ID or return 404 if not found
         $data = CMS::find($id);
         if (empty($data)) {
@@ -253,6 +245,7 @@ class HowItWork extends Controller
             'success' => true,
             'message' => 'Item status changed successfully.'
         ]);
+
     }
 
 }

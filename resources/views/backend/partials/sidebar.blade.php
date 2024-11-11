@@ -153,7 +153,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{ route('specialOrders.index') }}" class="menu-link">
                         <div data-i18n="Container">Special Orders</div>
                     </a>
                 </li>
@@ -163,7 +163,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{ route('pickupInstructions') }}" class="menu-link">
                         <div data-i18n="Notifications">Pickup Instructions</div>
                     </a>
                 </li>
@@ -173,7 +173,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{ route('howDeliveryWorks') }}" class="menu-link">
                         <div data-i18n="Notifications">How Delivery Works</div>
                     </a>
                 </li><li class="menu-item">
