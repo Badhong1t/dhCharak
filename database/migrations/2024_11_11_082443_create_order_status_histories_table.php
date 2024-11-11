@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('temp_images', function (Blueprint $table) {
+        Schema::create('order_status_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('image_url');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('temp_images');
+        Schema::dropIfExists('order_status_histories');
     }
 };

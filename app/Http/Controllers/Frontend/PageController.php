@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductAttribute;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 class PageController extends Controller
 {
 
@@ -26,12 +22,9 @@ class PageController extends Controller
 
     public function productDetails($slug){
 
-        $product = Product::with(['attribute_value','images'])->where('slug', $slug)->first();
-
-        $product_attributes = ProductAttribute::with('value')->where('product_id', $product->id)->get();
-
+        $product = Product::with(['images','attribute_values'])->where('slug', $slug)->first();
         $related_products = Product::where('category_id', $product->category_id)->limit(8)->get();
-        return view('frontend.layouts.product_details.index', compact('product', 'related_products', 'product_attributes'));
+        return view('frontend.layouts.product_details.index', compact('product', 'related_products', ));
 
     }
     public function productsBySubcategory($id){
@@ -39,18 +32,6 @@ class PageController extends Controller
         $products = Product::where('status', 'active')->where('subcategory_id', $id)->get();
         return view('frontend.layouts.products.subcategory_product', compact('products'));
     }
-    public function cart(){
-
-        return view('frontend.layouts.my_cart.index');
-
-    }
-
-    public function checkout(){
-
-        return view('frontend.layouts.checkout.index');
-
-    }
-
     public function specialOrders(){
 
         return view('frontend.layouts.special_orders.index');

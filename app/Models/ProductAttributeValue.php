@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductAttribute extends Model
+class ProductAttributeValue extends Model
 {
     protected $fillable = [
         'product_id',
         'attribute_id',
-        'value_id',
+        'attribute_value_id',
     ];
 
-    public function attribute()
+    public function product()
     {
-        return $this->belongsTo(Attribute::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function value()

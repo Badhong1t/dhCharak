@@ -8,7 +8,7 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductAttribute;
+use App\Models\ProductAttributeValue;
 use App\Models\ProductImage;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -127,10 +127,10 @@ class ProductController extends Controller
                             : [$attribute['attribute_value_id']];
                         // Save each value
                         foreach ($attributeValues as $valueId) {
-                            ProductAttribute::create([
+                            ProductAttributeValue::create([
                                 'product_id' => $product->id,
                                 'attribute_id' => $attribute['attribute_id'],
-                                'value_id' => $valueId,
+                                'attribute_value_id' => $valueId,
                             ]);
                         }
                     }
@@ -159,10 +159,10 @@ class ProductController extends Controller
                             : [$attribute['attribute_value_id']];
                         // Save each value
                         foreach ($attributeValues as $valueId) {
-                            ProductAttribute::create([
+                            ProductAttributeValue::create([
                                 'product_id' => $product->id,
                                 'attribute_id' => $attribute['attribute_id'],
-                                'value_id' => $valueId,
+                                'attribute_value_id' => $valueId,
                             ]);
                         }
                     }
@@ -266,31 +266,6 @@ class ProductController extends Controller
                 }
             }
         }
-        if ($request->product_attribute && is_array($request->product_attribute)) {
-            foreach ($request->product_attribute as $attribute) {
-                if (isset($attribute['attribute_id']) && isset($attribute['attribute_value_id'])) {
-                    $attributeValues = is_array($attribute['attribute_value_id'])
-                        ? $attribute['attribute_value_id']
-                        : [$attribute['attribute_value_id']];
-
-                    // Use updateOrCreate to handle updates or insertions
-                    foreach ($attributeValues as $valueId) {
-                        ProductAttribute::updateOrCreate(
-                            [
-                                'product_id' => $product->id,
-                                'attribute_id' => $attribute['attribute_id'],
-                                'value_id' => $valueId,
-                            ],
-                            [
-                                'product_id' => $product->id,
-                                'attribute_id' => $attribute['attribute_id'],
-                                'value_id' => $valueId,
-                            ]
-                        );
-                    }
-                }
-            }
-        }
         flash()->success(__('Product updated successfully.'));
         return redirect()->route('products.index');
     }
@@ -302,7 +277,7 @@ class ProductController extends Controller
     {
         $data = Product::findOrFail($id);
         $product_images = ProductImage::where('product_id', $id)->get();
-        $product_attributes = ProductAttribute::where('product_id', $id)->get();
+        $product_attributes = ProductAttributeValue::where('product_id', $id)->get();
         // Delete product attributes
         foreach ($product_attributes as $attribute) {
             $attribute->delete();
@@ -363,23 +338,6 @@ class ProductController extends Controller
             'message' => 'Product status changed successfully.'
         ]);
     }
-
-    public function attributeDelete($id)
-    {
-        $data = ProductAttribute::find($id);
-        if (empty($data)) {
-            return response()->json([
-                "success" => false,
-                "message" => "Item not found."
-            ], 404);
-        }
-        $data->delete();
-        return response()->json([
-            'success' => true,
-            'message' => 'Attribute deleted successfully.'
-        ]);
-    }
-
     public function imageDelete(Request $request, $id)
     {
         $data = ProductImage::find($id);

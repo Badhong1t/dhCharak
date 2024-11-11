@@ -56,6 +56,12 @@
         <div class="products-container">
         @if($products->count() > 0)
         @foreach($products as $product)
+        <form action="{{ route('add-to-cart') }}" method="POST">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="title" value="{{ $product->title }}">
+            <input type="hidden" name="customer_price" value="{{ $product->customer_price }}">
+            <input type="hidden" name="thumbnail" value="{{ $product->thumbnail }}">
           <div class="item">
             <a href="{{ route('productDetails', $product->slug) }}" class="img-content">
               <img src="{{ asset($product->thumbnail) ? asset($product->thumbnail) : asset('frontend/assets/images/product-1.png') }}" alt="">
@@ -74,7 +80,7 @@
               </div>
               <div class="action">
                 <div class="product-quantity-container">
-                  <input value="1" type="hidden" class="product-final-quantity" name="">
+                  <input value="1" type="hidden" class="product-final-quantity" name="quantity">
                   <div class="quantity-btn">
                     <span class="product-quantity" >1</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -89,12 +95,13 @@
                     <input type="number">
                   </div>
                 </div>
-                <a href="{{ route('cart') }}" class="action-btn">
-                  Add to cart
-                </a>
+                <button class="action-btn" type="submit">
+                    Add to cart
+                </button>
               </div>
             </div>
           </div>
+        </form>
           @endforeach
           @else
           <div class="text-center">

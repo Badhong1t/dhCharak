@@ -33,17 +33,13 @@ class Product extends Model
     {
         return $this->belongsTo(SubCategory::class, 'subcategory_id');
     }
-    public function attribute_value()
-    {
-        return $this->hasMany(ProductAttribute::class);
-    }
     public function images()
     {
         return $this->hasMany(ProductImage::class);
     }
-    public function attributes()
+    public function attribute_values()
     {
-        return $this->belongsToMany(Attribute::class,'product_attributes','product_id','attribute_id');
+        return $this->belongsToMany(AttributeValue::class,'product_attribute_values','product_id','attribute_value_id')->withPivot('attribute_id')->groupBy('attribute_id');
     }
 
 }

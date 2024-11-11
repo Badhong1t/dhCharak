@@ -61,6 +61,7 @@
             <div class="section-text mt-3 mb-5">
                 {{ $product->short_description ?? '' }}
             </div>
+            {{--  @dd($product_attributes)
             <div class="sizes-container">
                 <input id="product-size" value="" type="hidden" name="product-size">
                 <div class="title">Size:</div>
@@ -73,9 +74,9 @@
                         @endif
                     @endforeach
                 @endif
-            </div>
+            </div>  --}}
 
-            <div class="sizes-container mt-3">
+            {{--  <div class="sizes-container mt-3">
                 <input id="product-color" value="" type="hidden" name="product-color">
                 <div class="title mt-3">Color:</div>
                 @if ($product_attributes->count() > 0)
@@ -87,7 +88,7 @@
                         @endif
                     @endforeach
                 @endif
-            </div>
+            </div>  --}}
 
             <div class="product-details-quantity-container d-flex align-items-center gap-3 mt-5 mb-3">
                 <div id="product-details-minus-btn" class="decrease-btn">-</div>
@@ -128,7 +129,13 @@
         <div class="products-container">
             @if ($related_products->count() > 0)
             @foreach ($related_products as $product)
-            <div class="item">
+            <form action="{{ route('add-to-cart') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <input type="hidden" name="title" value="{{ $product->title }}">
+                <input type="hidden" name="customer_price" value="{{ $product->customer_price }}">
+                <input type="hidden" name="thumbnail" value="{{ $product->thumbnail }}">
+             <div class="item">
                 <a href="" class="img-content">
                     <img src="{{ asset($product->thumbnail ?? 'frontend/assets/images/product-1.png') }}" alt="">
                 </a>
@@ -163,12 +170,13 @@
                                 <input type="number">
                             </div>
                         </div>
-                        <a href="{{ route('cart') }}" class="action-btn">
+                        <button class="action-btn" type="submit">
                             Add to cart
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
+            </form>
             @endforeach
             @else
             <div class="text-center">
