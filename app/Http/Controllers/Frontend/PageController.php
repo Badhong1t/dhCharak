@@ -82,5 +82,17 @@ class PageController extends Controller
     }
 
 
+    public function orders() {
+
+        return view('frontend.layouts.orders.index');
+
+    }
+
+    public function accountDetails(){
+
+        return view('frontend.layouts.account_details.index');
+
+    }
+
 
 }

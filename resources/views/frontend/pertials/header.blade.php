@@ -112,7 +112,7 @@
         @endauth
 
       </div>
-      <a href="./order.html" class="header-title">Orders</a>
+      <a href="{{ route('orders') }}" class="header-title">Orders</a>
       <div class="header-cart-container ">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M3 3H4.40354C5.33734 3 6.14686 3.64618 6.35381 4.55676L6.90909 7M8.5 14H16.3858C17.6537 14 18.7846 13.203 19.2111 12.009L20.5227 8.33634C20.7553 7.68509 20.2725 7 19.581 7H6.90909M8.5 14L6.90909 7M8.5 14L9.08555 16.0494C9.33087 16.908 10.1156 17.5 11.0086 17.5H18M11 20H11.01M17 20H17.01" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
