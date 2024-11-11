@@ -20,6 +20,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/terms-and-conditions', 'termsAndConditions')->name('termsAndConditions');
     Route::get('/products', 'products')->name('products');
     Route::get('/product-details', 'productDetails')->name('productDetails');
+    Route::get('/subcategorywise/product/{id}', 'productsBySubcategory')->name('subcategorywise.product');
     Route::get('/orders', 'orders')->name('orders');
     Route::get('/account-details', 'accountDetails')->name('accountDetails');
 });
