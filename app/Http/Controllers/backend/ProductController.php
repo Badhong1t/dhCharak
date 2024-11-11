@@ -8,6 +8,7 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttributeValue;
 use App\Models\ProductImage;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class ProductController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('thumbnail', function ($data) {
-                    return '<img src="' . asset($data->thumbnail) . '" width="100" height="100">';
+                    return '<img src="' . asset($data->thumbnail) . '" width="70" height="70">';
                 })
                 ->addColumn('category', function ($data) {
                     return $data->category->name;
@@ -54,10 +55,7 @@ class ProductController extends Controller
                 })
                 ->addColumn('action', function ($data) {
                     return '<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                <a href="' . route('attributes.show', $data->id) . '" type="button" class="btn btn-info text-white" title="Settings">
-                                  <i class="bx bx-cog"></i>
-                                </a>
-                                <a href="' . route('attributes.edit', $data->id) . '" type="button" class="btn btn-primary text-white" title="Edit">
+                                <a href="' . route('products.edit', $data->id) . '" type="button" class="btn btn-primary text-white" title="Edit">
                                   <i class="bx bx-pencil"></i>
                                 </a>
                                 <a href="#" onclick="showDeleteConfirm(' . $data->id . ')" type="button" class="btn btn-danger text-white" title="Delete">
@@ -97,10 +95,7 @@ class ProductController extends Controller
             'thumbnail' => 'required|image|max:2048|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required|string',
             'short_description' => 'nullable|max:500|string',
-            'size' => 'nullable|array',
-            'size.*' => 'exists:sizes,value',
-            'colors' => 'nullable|array',
-            'colors.*' => 'exists:colors,value',
+            'additional_information' => 'nullable|string',
         ]);
         try {
             if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
@@ -108,7 +103,6 @@ class ProductController extends Controller
             } else {
                 $thumbnail_path = 'backend/images/placeholder/image_placeholder.png';
             }
-
             $product = Product::create([
                 'title' => $request->title,
                 'slug' => $request->slug,
@@ -123,9 +117,26 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'short_description' => $request->short_description,
                 'additional_information' => $request->additional_information,
-                'size' => $request->size,
-                'colors' => $request->colors
+
             ]);
+            if ($request->product_attribute && is_array($request->product_attribute)) {
+                foreach ($request->product_attribute as $attribute) {
+                    if (isset($attribute['attribute_id']) && isset($attribute['attribute_value_id'])) {
+                        $attributeValues = is_array($attribute['attribute_value_id'])
+                            ? $attribute['attribute_value_id']
+                            : [$attribute['attribute_value_id']];
+                        // Save each value
+                        foreach ($attributeValues as $valueId) {
+                            ProductAttributeValue::create([
+                                'product_id' => $product->id,
+                                'attribute_id' => $attribute['attribute_id'],
+                                'attribute_value_id' => $valueId,
+                            ]);
+                        }
+                    }
+                }
+            }
+
             if ($request->hasFile('gallery_images')) {
                 foreach ($request->file('gallery_images') as $image) {
                     try {
@@ -137,6 +148,23 @@ class ProductController extends Controller
                     } catch (\Exception $e) {
                         // Handle any exceptions (e.g., log error, show error message)
                         return redirect()->back()->with('error', 'Failed to upload image.');
+                    }
+                }
+            }
+            if($request->product_attribute && is_array($request->product_attribute)){
+                foreach ($request->product_attribute as $attribute) {
+                    if (isset($attribute['attribute_id']) && isset($attribute['attribute_value_id'])) {
+                        $attributeValues = is_array($attribute['attribute_value_id'])
+                            ? $attribute['attribute_value_id']
+                            : [$attribute['attribute_value_id']];
+                        // Save each value
+                        foreach ($attributeValues as $valueId) {
+                            ProductAttributeValue::create([
+                                'product_id' => $product->id,
+                                'attribute_id' => $attribute['attribute_id'],
+                                'attribute_value_id' => $valueId,
+                            ]);
+                        }
                     }
                 }
             }
@@ -161,7 +189,17 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::with(['images','attribute_value','attributes'])->find($id);
+        if (!$product) {
+            flash()->error(__('Product not found.'));
+            return redirect()->back();
+        }
+        $categories = Category::all();
+        $subcategories = SubCategory::all();
+        $attributes = Attribute::all();
+        $attributeValues = AttributeValue::all();
+
+        return view('backend.layouts.product.edit', compact('product', 'categories', 'attributes','subcategories','attributeValues'));
     }
 
     /**
@@ -169,7 +207,67 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255|string',
+            'slug' => 'required|max:255|string',
+            'category_id' => 'required',
+            'subcategory_id' => 'required',
+            'customer_price' => 'required|numeric',
+            'business_price' => 'required|numeric',
+            'quantity' => 'required|numeric',
+            'thumbnail' => 'nullable|image|max:2048|mimes:jpeg,png,jpg,gif,svg',
+            'description' => 'required|string',
+            'short_description' => 'nullable|max:500|string',
+            'additional_information' => 'nullable|string',
+            'gallery_images' => 'nullable|array',
+            'gallery_images.*' => 'nullable|image|max:2048|mimes:jpeg,png,jpg,gif,svg',
+
+
+        ]);
+        $product = Product::with('images','attribute_value','attributes')->findOrFail($id);
+        if (!$product) {
+            flash()->error(__('Product not found.'));
+            return redirect()->back();
+        }
+        if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
+            Helper::fileDelete(public_path($product->thumbnail));
+            $thumbnail_path = Helper::fileUpload($request->file('thumbnail'), 'products/thumbnail', getFileName($request->file('thumbnail')));
+        }else{
+            $thumbnail_path = $product->thumbnail;
+        }
+        $product->update([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'category_id' => $request->category_id,
+            'subcategory_id' => $request->subcategory_id,
+            'customer_price' => $request->customer_price,
+            'business_price' => $request->business_price,
+            'quantity' => $request->quantity,
+            'thumbnail' => $thumbnail_path,
+            'description' => $request->description,
+            'short_description' => $request->short_description,
+            'additional_information' => $request->additional_information
+        ]);
+        if ($request->hasFile('gallery_images')) {
+            // Delete existing gallery images
+            //ProductImage::where('product_id', $product->id)->delete();
+
+            foreach ($request->file('gallery_images') as $key=>$image) {
+                try {
+                    $imagePath = Helper::fileUpload($image, 'products/images', getFileName($image));
+                    ProductImage::create([
+                        'id' => $key,
+                        'product_id' => $product->id,
+                        'image_url' => $imagePath
+                    ]);
+                } catch (\Exception $e) {
+                    // Handle any exceptions (e.g., log error, show error message)
+                    return redirect()->back()->with('error', 'Failed to upload image.');
+                }
+            }
+        }
+        flash()->success(__('Product updated successfully.'));
+        return redirect()->route('products.index');
     }
 
     /**
@@ -177,7 +275,37 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Product::findOrFail($id);
+        $product_images = ProductImage::where('product_id', $id)->get();
+        $product_attributes = ProductAttributeValue::where('product_id', $id)->get();
+        // Delete product attributes
+        foreach ($product_attributes as $attribute) {
+            $attribute->delete();
+        }
+        // Delete product images
+        foreach ($product_images as $image) {
+            Helper::fileDelete(public_path($image->image_url));
+            $image->delete();
+        }
+        // Delete gallery images
+        foreach ($product_images as $image) {
+            Helper::fileDelete(public_path($image->image_url));
+            $image->delete();
+        }
+        if (!$data) {
+            return response()->json([
+                "success" => false,
+                "message" => "Product not found."
+            ]);
+        }
+        if (! empty($data->thumbnail)) {
+            Helper::fileDelete(public_path($data->thumbnail));
+        }
+        $data->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Product deleted successfully.'
+        ]);
     }
 
     public function getSubcategory($id)
@@ -186,4 +314,53 @@ class ProductController extends Controller
         return response()->json($data);
 
     }
+
+    public function Status($id)
+    {
+        // Find the blog by ID or return 404 if not found
+        $data = Product::find($id);
+        if (empty($data)) {
+            return response()->json([
+                "success" => false,
+                "message" => "Item not found."
+            ], 404);
+        }
+
+        if ($data->status == 'active') {
+            $data->status = 'inactive';
+        } else {
+            $data->status = 'active';
+        }
+
+        $data->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Product status changed successfully.'
+        ]);
+    }
+    public function imageDelete(Request $request, $id)
+    {
+        $data = ProductImage::find($id);
+
+        if (empty($data)) {
+            return response()->json([
+                "success" => false,
+                "message" => "Item not found."
+            ], 404);
+        }
+
+        // Delete the image file from storage
+        if (file_exists(public_path($data->image_url))) {
+            Helper::fileDelete(public_path($data->image_url));
+        }
+
+        // Delete the record from the database
+        $data->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Image deleted successfully.'
+        ]);
+    }
+
 }

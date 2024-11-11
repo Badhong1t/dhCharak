@@ -112,14 +112,14 @@
         @endauth
 
       </div>
-      <a href="./order.html" class="header-title">Orders</a>
+      <a href="{{ route('orders') }}" class="header-title">Orders</a>
       <div class="header-cart-container ">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M3 3H4.40354C5.33734 3 6.14686 3.64618 6.35381 4.55676L6.90909 7M8.5 14H16.3858C17.6537 14 18.7846 13.203 19.2111 12.009L20.5227 8.33634C20.7553 7.68509 20.2725 7 19.581 7H6.90909M8.5 14L6.90909 7M8.5 14L9.08555 16.0494C9.33087 16.908 10.1156 17.5 11.0086 17.5H18M11 20H11.01M17 20H17.01" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <a href="./my-cart.html" class="header-cart header-title">
+        <a href="{{ route('cart.index') }}" class="header-cart header-title">
           Cart
-          <div class="cart-count">2</div>
+          <div class="cart-count">{{ Cart::count() ?? 0 }}</div>
         </a>
       </div>
     </header>
@@ -129,72 +129,27 @@
 
     <!-- home categories list start -->
     <div class="home-categories-list">
+    @if($categories->count() > 0)
+      @foreach($categories as $item)
       <div>
         <div class="title">
-          Grocery
+          {{ $item->name ?? '' }}
         </div>
+        @php
+          $subCategories = DB::table('sub_categories')->where('category_id', $item->id)->get();
+        @endphp
         <div class="items">
-          <a href="./products.html">Fresh Food</a>
-          <a href="./products.html">Snacks</a>
-          <a href="./products.html">Candy</a>
-          <a href="./products.html">Beverages</a>
+            @if($subCategories->count() > 0)
+            @foreach ($subCategories as $subCategory)
+                <a href="{{ route('subcategorywise.product',$subCategory->id) }}">{{ $subCategory->name ?? '' }}</a>
+            @endforeach
+            @endif
         </div>
+
       </div>
-      <div>
-        <div class="title">
-          Home
-        </div>
-        <div class="items">
-          <a href="./products.html">Furniture</a>
-          <a href="./products.html">Mattress</a>
-          <a href="./products.html">Bedding</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Health
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Electronics
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Seasonal
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
-      <div>
-        <div class="title">
-          Household
-        </div>
-        <div class="items">
-          <a href="./products.html">Item 1</a>
-          <a href="./products.html">Item 2</a>
-          <a href="./products.html">Item 3</a>
-          <a href="./products.html">Item 4</a>
-        </div>
-      </div>
+      @endforeach
+    @endif
+
     </div>
     <!-- home categories list end -->
 
@@ -207,30 +162,30 @@
           </svg>
 
         </a>
-        <a href="./special-order.html">Special Orders</a>
+        <a href="{{ route('specialOrders') }}">Special Orders</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./how-works.html">How it Works</a>
+        <a href="{{ route('howWorks') }}">How it Works</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./handling-goods.html">Handling Frozen & Refrigerated Goods</a>
+        <a href="{{ route('handlingGoods') }}">Handling Frozen & Refrigerated Goods</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./delivery-schedule.html">Delivery Schedule</a>
+        <a href="{{ route('deliveryDetails') }}">Delivery Schedule</a>
         <span>
           <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
             <circle cx="1.5" cy="2" r="1.5" fill="#666666"/>
           </svg>
         </span>
-        <a href="./pickup-locations.html">Pickup Instruction & Locations</a>
+        <a href="{{ route('pickupLocations') }}">Pickup Instruction & Locations</a>
      </div>
     <!-- home categories container end -->

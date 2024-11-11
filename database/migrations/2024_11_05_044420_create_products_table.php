@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('barcode')->nullable();
             $table->decimal('customer_price', 8, 2);
             $table->decimal('business_price', 8, 2)->nullable();
-            $table->string('attribute_id')->nullable();
-            $table->string('attribute_value_id')->nullable();
             $table->integer('quantity');
             $table->text('short_description')->nullable();
             $table->text('description')->nullable();

@@ -184,7 +184,7 @@
                                       </svg>
                                   </span>
                                   <p id="upload-text">Upload file</p>
-                                  <input type="file" name="trade_license" class="file-input" id="profile" accept=".pdf,.doc,.docx,.txt,.rtf,.odt,.xls,.xlsx,.ppt,.pptx" style="display: none;">
+                                  <input type="file" name="trade_license" class="file-input" id="profile" accept=".pdf,.doc,.docx,.txt,.rtf,.odt,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png" style="display: none;">
                                 </div>
                                 @error('trade_license')
                                 <div class="invalid-feedback d-block">{{$message}}</div>

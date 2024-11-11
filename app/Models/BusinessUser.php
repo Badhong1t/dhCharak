@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TempImage extends Model
+class BusinessUser extends Model
 {
     protected $fillable = [
-        'image_url',
+        'user_id',
+        'business_name',
+        'trade_license',
     ];
+
 }

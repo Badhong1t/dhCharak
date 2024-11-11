@@ -36,7 +36,7 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Thumbnail</th>
-                                        <th>Title</th>
+                                        <th>Product Name</th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
                                         <th>Price</th>
@@ -121,7 +121,14 @@
                         data: 'title',
                         name: 'title',
                         orderable: true,
-                        searchable: true
+                        searchable: true,
+                        render: function(data, type, row) {
+                            if (data.length > 50) {
+                                return data.substring(0, 50) + '...';
+                            } else {
+                                return data;
+                            }
+                        }
                     },
                     {
                         data: 'category',
@@ -142,8 +149,8 @@
                         searchable: true
                     },
                     {
-                        data: 'quntity',
-                        name: 'quntity',
+                        data: 'quantity',
+                        name: 'quantity',
                         orderable: true,
                         searchable: true
                     },
@@ -151,7 +158,7 @@
                         data: 'stock',
                         name: 'stock',
                         orderable: true,
-                        searchable: true
+                        searchable: false
                     },
                     {
                         data: 'status',
@@ -195,7 +202,7 @@
     };
     // Delete Button
     function deleteItem(id) {
-        var url = '{{ route('attributes.destroy', ':id') }}';
+        var url = '{{ route('products.destroy', ':id') }}';
         var csrfToken = '{{ csrf_token() }}';
         $.ajax({
             type: "DELETE",
@@ -224,6 +231,46 @@
             error: function(error) {
                 // location.reload();
             } // Error
+        });
+    }
+    // Use the status change alert
+    function changeStatus(event, id) {
+        event.preventDefault();
+        let statusUrl = '{{ route('product.status', ':id') }}'.replace(':id', id);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to change the status of this category.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: statusUrl,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        Swal.fire(
+                            'Status Updated!',
+                            response.success,
+                            'success'
+                        );
+                        $('#data-table').DataTable().ajax.reload(); // Reload DataTable
+                    },
+                    error: function(response) {
+                        Swal.fire(
+                            'Error!',
+                            response.responseJSON.error || 'An error occurred.',
+                            'error'
+                        );
+                    }
+                });
+            }
         });
     }
 </script>

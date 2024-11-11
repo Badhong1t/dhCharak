@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Models\BusinessUser;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -30,8 +31,26 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
+        /* $userId = Auth::user()->id;
+        $businessUser = BusinessUser::find($userId); */
+
+        /* if($businessUser) {
+            $request->validate([
+                'business_name' => ['string', 'required', 'max:255'],
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'terms' => ['accepted'],
+                'accountType' => ['required'],
+                'trade_license' => ['required', 'image', 'max:2048'],
+            ]);
+        } */
+
         $request->validate([
-            'business_name' => ['nullable', 'string', 'max:255'],
+            'business_name' => ['string', 'required', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
@@ -39,7 +58,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'terms' => ['accepted'],
             'accountType' => ['required'],
-            'trade_license' => ['nullable', 'image', 'max:2048'],
+            'trade_license' => ['required', 'image', 'max:2048'],
         ]);
 
         if ($request->hasFile('trade_license') && $request->file('trade_license')->isValid()) {
@@ -48,7 +67,6 @@ class RegisteredUserController extends Controller
             $trade_license = null;
         }
         $user = User::create([
-            'business_name' => $request->business_name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'username' => $request->username,
@@ -56,15 +74,20 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'account_type' => $request->accountType,
-            'trade_license' => $trade_license,
             'island' => $request->island,
             'address' => $request->address,
+        ]);
+
+        $businessUser = BusinessUser::create([
+            'user_id' => $user->id,
+            'business_name' => $request->business_name,
+            'trade_license' => $trade_license
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('home', absolute: false));
     }
 }

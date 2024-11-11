@@ -18,18 +18,18 @@
         <div class="footer-col">
             <h3>Quick links</h3>
             <ul>
-                <li><a href="./products.html">Products</a></li>
-                <li><a href="./special-order.html">Special orders</a></li>
-                <li><a href="./how-works.html">How it works</a></li>
-                <li><a href="./delivery-schedule.html">Delivery Schedule</a></li>
-                <li><a href="./pickup-locations.html">Pickup location</a></li>
+                <li><a href="{{ route('products') }}">Products</a></li>
+                <li><a href="{{ route('specialOrders') }}">Special orders</a></li>
+                <li><a href="{{ route('howWorks') }}">How it works</a></li>
+                <li><a href="{{ route('deliveryDetails') }}">Delivery Schedule</a></li>
+                <li><a href="{{ route('pickupLocations') }}">Pickup location</a></li>
             </ul>
         </div>
         <div class="footer-col">
             <h3>About us</h3>
             <ul>
-                <li><a href="./terms.html">Terms & Conditions</a></li>
-                <li><a href="./privacy.html">Privacy Statement</a></li>
+                <li><a href="{{ route('termsAndConditions') }}">Terms & Conditions</a></li>
+                <li><a href="{{ route('privacyStatement') }}">Privacy Statement</a></li>
             </ul>
         </div>
         <div class="footer-col">

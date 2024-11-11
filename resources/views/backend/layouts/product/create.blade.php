@@ -158,7 +158,7 @@
                                             name="thumbnail"
                                             data-default-file="{{ asset('backend/images/placeholder/image_placeholder.png') }}">
                                         @error('thumbnail')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@
                                         Product Attributes
                                         <button type="button" id="add-attribute" class="btn btn-primary btn-sm" style="float: right">Add</button>
                                     </h5>
-                                    <div class="row">
+                                    <div class="row attribute-section" data-id="0">
                                         <div class="form-group mb-3 col-lg-6">
                                             <label for="attribute" class="form-lable">Attribute</label>
                                             <select name="product_attribute[0][attribute_id]" id="attribute" class="form-control attribute @error('attribute_id') is-invalid @enderror">
@@ -216,7 +216,7 @@
                                                     <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('status')
+                                            @error('attribute_id')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -224,15 +224,10 @@
                                             <!-- Attribute values will be loaded here -->
                                         </div>
                                     </div>
-                                    <div class="row" id="allgroupOfInput"></div>
+                                    <div class="row" id="allgroupOfInput">
+
+                                    </div>
                                 </div>
-
-
-
-
-
-
-
 
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -322,7 +317,7 @@
         let imageSectionCount = 0
         $('#add-gallery-image').click(function() {
             imageSectionCount++
-            $('#gallery-images-section').append(`<div class="col-lg-4 position-relative single-gallery-image">
+            $('#gallery-images-section').append(`<div class="col-lg-4 position-relative single-gallery-image mb-2">
              <button type="button" class="remove-gallery-section p-1 bg-danger text-white position-absolute" style="top: 0; right: -2px; z-index: 999; border-radius: 50%; border: 0">
                  <i class='bx bx-x'></i>
              </button>
@@ -343,34 +338,49 @@
     <script>
         $(document).ready(function() {
             let productVariationNumber = 0;
+            let maxAttributes = {{ $attributes->count() }};
             $(document).on('click', '#add-attribute', function() {
                 productVariationNumber++;
-                let newInputGroup = `<div class="row" data-id="${productVariationNumber}">
-                            <div class="form-group mb-3 col-lg-6">
+                let newInputGroup = `<div class="row position-relative attribute-section" data-id="${productVariationNumber}">
+                            <div class="form-group mb-3 col-lg-5">
                                 <label for="attribute" class="form-lable">Attribute</label>
-                                <select name="product_attribute[${productVariationNumber}]" id="attribute" class="form-control attribute @error('attribute_id') is-invalid @enderror">
+                                <select name="product_attribute[${productVariationNumber}][attribute_id]" id="attribute" class="form-control attribute @error('attribute_id') is-invalid @enderror">
                                     <option value="">Select Attribute</option>
                                     @foreach ($attributes as $attribute)
                                         <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('status')
+                                @error('attribute_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="attribute_value form-group mb-3 col-lg-6">
+                            <div class="form-group mb-3 col-lg-1">
+                                <label for="attribute_value" class="form-lable"></label>
+                                 <button class="btn btn-danger btn-sm remove-attribute mt-7"><i class='bx bx-x'></i></button>
+                            </div>
+                            <div class="attribute_value form-group mb-3 col-lg-6" id="product_attribute_${ productVariationNumber }">
 
                             </div>
 
                         </div>
                     `;
                 $('#allgroupOfInput').append(newInputGroup);
+                // Check if limit is reached, and hide the add button if so
+                if (productVariationNumber >= maxAttributes - 1) {
+                    $('#add-attribute').hide();
+                }
             });
+            // Remove an attribute section if needed and update counts and options
+            $(document).on('click', '.remove-attribute', function() {
+                $(this).closest('.attribute-section').remove();
+                productVariationNumber--;
 
-
+                // Show the add button again if the limit is not reached
+                if (productVariationNumber < maxAttributes) {
+                    $('#add-attribute').show();
+                }
+            });
         });
-
-
 
     </script>
 
@@ -379,25 +389,25 @@
             // When attribute is selected, load the corresponding attribute values
             $(document).on('change', '#attribute', function() {
                 var attributeId = $(this).val();
-                var productId = 0; // Use for dynamic form
-                var attributeContainer = "#product_attribute_" + productId;
+                var attributeContainer = $(this).closest('.attribute-section');
+                var productId = attributeContainer.data('id');
 
                 if (attributeId) {
                     // Send AJAX request to fetch attribute values
                     $.ajax({
-                        url: "/get-attribute-value/" + attributeId,
+                        url: "{{ route('get-attribute-value', ':attributeId') }}".replace(':attributeId', attributeId),
                         type: "GET",
                         success: function(data) {
                             var valuesHTML = '<label for="attribute_values">Attribute Values</label>';
-                            valuesHTML += '<select name="product_attribute[' + productId + '][attribute_value_id]" id="attribute_values" class="form-control">';
+                            valuesHTML += '<select name="product_attribute[' + productId + '][attribute_value_id][]" id="attribute_values" class="form-control selectpicker" data-live-search="true" multiple>';
                             valuesHTML += '<option value="">Select </option>';
                             data.forEach(function(value) {
                                 valuesHTML += '<option value="' + value.id + '">' + value.value + '</option>';
                             });
                             valuesHTML += '</select>';
-
                             // Append the generated HTML into the form
-                            $(attributeContainer).html(valuesHTML);
+                           attributeContainer.find('.attribute_value').html(valuesHTML);
+                           $('.selectpicker').selectpicker();
                         },
                         error: function() {
                             alert("Error loading attribute values.");
@@ -408,5 +418,6 @@
                 }
             });
         });
+
     </script>
 @endpush
