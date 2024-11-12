@@ -77,18 +77,18 @@ if (! function_exists('is_url')) {
         return filter_var($url, FILTER_VALIDATE_URL) !== false;
     }
 }
-// if (! function_exists('generateOrderNumber')) {
-//     function generateOrderNumber(): string
-//     {
-//         $latestOrderNumber = Order::latest()->first();
-//         do {
-//             $orderNumber = 'ORD-'.now()->year.'-'.str_pad(($latestOrderNumber?->id ?? 0) + 1, 6, '0', STR_PAD_LEFT);
-//             $exists = Order::where('order_number', $orderNumber)->exists();
-//         } while ($exists);
+if (! function_exists('generateOrderNumber')) {
+    function generateOrderNumber(): string
+    {
+        $latestOrderNumber = Order::latest()->first();
+        do {
+            $orderNumber = 'ORD-'.now()->year.'-'.str_pad(($latestOrderNumber?->id ?? 0) + 1, 6, '0', STR_PAD_LEFT);
+            $exists = Order::where('order_number', $orderNumber)->exists();
+        } while ($exists);
 
-//         return $orderNumber;
-//     }
-// }
+        return $orderNumber;
+    }
+}
 
 if (! function_exists('mask_email')) {
     /**

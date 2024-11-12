@@ -52,8 +52,13 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-3">
-                                <label for="name" class="form-lable">Type <span class="text-danger">*</span></span></label>
-                                <input type="text" id="name" class="form-control" name="type" value="{{ $attribute->name }}" readonly>
+                                <label for="name" class="form-lable">Attribute Type <span class="text-danger">*</span></span></label>
+                                <select class="form-control" name="type" id="">
+                                    <option value="Color">Color</option>
+                                    <option value="Size">Size</option>
+                                    <option value="Material">Material</option>
+                                    <option value="Liter">Liter</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary">Submit</button>

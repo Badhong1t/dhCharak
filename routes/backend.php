@@ -5,7 +5,6 @@ use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\AttributeValueController;
 use App\Http\Controllers\backend\CategoryController;
-// use App\Http\Controllers\backend\AttributesController;
 use App\Http\Controllers\backend\CMS\HandlingFrozenGoods;
 use App\Http\Controllers\backend\CMS\HowDeliveryWorks;
 use App\Http\Controllers\backend\CMS\HowItWork;
@@ -18,17 +17,7 @@ use App\Http\Controllers\backend\settings\ProfileController;
 use App\Http\Controllers\backend\settings\SocialLinkController;
 use App\Http\Controllers\backend\settings\SystemController;
 use App\Http\Controllers\backend\SubCategoryController;
-use App\Http\Controllers\Backend\TempImageController;
-use App\Models\DynamicPage;
 use Illuminate\Support\Facades\Route;
-
-
-
-
-
-
-
-
 
 
 
@@ -55,10 +44,13 @@ Route::post('/subcategories/status/{id}', [SubCategoryController::class,'status'
 //product Routes
 Route::middleware(['auth:web', 'admin'])->prefix('admin')->group(function () {
     Route::resource('products', ProductController::class);
+    Route::post('/products/status/{id}', [ProductController::class, 'Status'])->name('product.status');
+    Route::delete('/product/attribute-delete/{id}', [ProductController::class, 'attributeDelete'])->name('product.attribute-delete');
+    Route::post('/product/image/delete/{id}', [ProductController::class, 'imageDelete'])->name('product.delete-image');
 });;
  //Golbal Route Here---------
  Route::get('/get-sub-category/{id}', [ProductController::class, 'getSubcategory']);
-Route::post('/subcategories/status/{id}', [SubCategoryController::class, 'status'])->name('subcategories.status');
+ Route::get('/get-attribute-values/{id}', [AttributeValueController::class, 'getAttributeValues'])->name('get-attribute-value');
 
 //Settings Routes
 Route::controller(ProfileController::class)->group(function () {
@@ -110,8 +102,3 @@ Route::post('/howDeliveryWorksImage/update', [HowDeliveryWorks::class, 'updateIm
 Route::get('/pickupInstructions', [PickupInstructions::class, 'index'])->name('pickupInstructions');
 Route::post('/pickupInstructions/update', [PickupInstructions::class, 'pickupInstructionsUpdate'])->name('pickupInstructionsUpdate');
 Route::post('/pickupInstructionsImage/update', [PickupInstructions::class, 'updateImages'])->name('pickupInstructionsImage.update');
-
-//temp-images.create routes
-Route::post('/temp-images/create', [TempImageController::class, 'create'])->name('temp-images.create');
-
-Route::get('/get-attribute-value/{id}', [AttributeValueController::class, 'getattributeValues'])->name('get-attribute-value');

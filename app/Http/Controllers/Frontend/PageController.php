@@ -3,16 +3,35 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
+use App\Models\Category;
+use App\Models\Product;
 class PageController extends Controller
 {
 
     public function home()
     {
-        return view('frontend.layouts.home');
+        $products = Product::where('status', 'active')->limit(12)->get();
+        return view('frontend.layouts.home', compact('products'));
+    }
+    public function products(){
+        $products = Product::where('status', 'active')->get();
+        $categories = Category::all();
+        return view('frontend.layouts.products.index',compact('products', 'categories'));
+
     }
 
+    public function productDetails($slug){
+
+        $product = Product::with(['images','attribute_values'])->where('slug', $slug)->first();
+        $related_products = Product::where('category_id', $product->category_id)->limit(8)->get();
+        return view('frontend.layouts.product_details.index', compact('product', 'related_products', ));
+
+    }
+    public function productsBySubcategory($id){
+
+        $products = Product::where('status', 'active')->where('subcategory_id', $id)->get();
+        return view('frontend.layouts.products.subcategory_product', compact('products'));
+    }
     public function specialOrders(){
 
         return view('frontend.layouts.special_orders.index');
@@ -62,30 +81,6 @@ class PageController extends Controller
 
     }
 
-    public function products(){
-
-
-        return view('frontend.layouts.products.index');
-
-    }
-
-    public function productDetails(){
-
-        return view('frontend.layouts.product_details.index');
-
-    }
-
-    public function cart(){
-
-        return view('frontend.layouts.my_cart.index');
-
-    }
-
-    public function checkout(){
-
-        return view('frontend.layouts.checkout.index');
-
-    }
 
     public function orders() {
 
