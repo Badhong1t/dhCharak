@@ -49,7 +49,7 @@ Route::middleware(['auth:web', 'admin'])->prefix('admin')->group(function () {
 });;
  //Golbal Route Here---------
  Route::get('/get-sub-category/{id}', [ProductController::class, 'getSubcategory']);
-Route::post('/subcategories/status/{id}', [SubCategoryController::class, 'status'])->name('subcategories.status');
+ Route::get('/get-attribute-values/{id}', [AttributeValueController::class, 'getAttributeValues'])->name('get-attribute-value');
 
 //Settings Routes
 Route::controller(ProfileController::class)->group(function () {

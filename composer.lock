@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bfa41e82e08c7b97d817bb00f862cc3",
+    "content-hash": "2fb4fd8ab8ff8f7f427d0a790f625f17",
     "packages": [
         {
             "name": "authorizenet/authorizenet",
@@ -4005,7 +4005,56 @@
             "time": "2024-04-27T21:32:50+00:00"
         },
         {
-<<<<<<< HEAD
+            "name": "rexlabs/enum",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rexlabsio/enum-php.git",
+                "reference": "3bd70d990e02e2180ef3fa6c0f11c910527183fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rexlabsio/enum-php/zipball/3bd70d990e02e2180ef3fa6c0f11c910527183fe",
+                "reference": "3bd70d990e02e2180ef3fa6c0f11c910527183fe",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5.7|^7.5|^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rexlabs\\Enum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jodie Dunlop",
+                    "email": "jodie.dunlop@rexlabs.com.au"
+                }
+            ],
+            "description": "Enumeration (enum) implementation for PHP",
+            "keywords": [
+                "constants",
+                "enum",
+                "enumeration",
+                "library",
+                "valuelist"
+            ],
+            "support": {
+                "issues": "https://github.com/rexlabsio/enum-php/issues",
+                "source": "https://github.com/rexlabsio/enum-php/tree/2.2.1"
+            },
+            "time": "2021-09-19T23:36:20+00:00"
+        },
+        {
             "name": "surfsidemedia/shoppingcart",
             "version": "v1.0.0",
             "source": {
@@ -4046,31 +4095,6 @@
             "autoload": {
                 "psr-4": {
                     "Surfsidemedia\\Shoppingcart\\": "src/"
-=======
-            "name": "rexlabs/enum",
-            "version": "2.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rexlabsio/enum-php.git",
-                "reference": "3bd70d990e02e2180ef3fa6c0f11c910527183fe"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rexlabsio/enum-php/zipball/3bd70d990e02e2180ef3fa6c0f11c910527183fe",
-                "reference": "3bd70d990e02e2180ef3fa6c0f11c910527183fe",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.5.7|^7.5|^8.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Rexlabs\\Enum\\": "src/"
->>>>>>> 00c2411ee8b86af30da594146467a7d1e0f1cebd
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4079,7 +4103,6 @@
             ],
             "authors": [
                 {
-<<<<<<< HEAD
                     "name": "Sudhir Kumar"
                 }
             ],
@@ -4093,25 +4116,6 @@
                 "source": "https://github.com/surfsidemedia/LaravelShoppingcart/tree/v1.0.0"
             },
             "time": "2024-03-19T17:25:32+00:00"
-=======
-                    "name": "Jodie Dunlop",
-                    "email": "jodie.dunlop@rexlabs.com.au"
-                }
-            ],
-            "description": "Enumeration (enum) implementation for PHP",
-            "keywords": [
-                "constants",
-                "enum",
-                "enumeration",
-                "library",
-                "valuelist"
-            ],
-            "support": {
-                "issues": "https://github.com/rexlabsio/enum-php/issues",
-                "source": "https://github.com/rexlabsio/enum-php/tree/2.2.1"
-            },
-            "time": "2021-09-19T23:36:20+00:00"
->>>>>>> 00c2411ee8b86af30da594146467a7d1e0f1cebd
         },
         {
             "name": "symfony/clock",
@@ -10365,12 +10369,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

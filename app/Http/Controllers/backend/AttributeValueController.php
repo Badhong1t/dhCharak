@@ -119,7 +119,7 @@ class AttributeValueController extends Controller
 
     }
 
-    public function getattributeValues($id){
+    public function getAttributeValues($id){
         $attributeValues = AttributeValue::where('attribute_id', $id)->get();
         return response()->json($attributeValues);
     }

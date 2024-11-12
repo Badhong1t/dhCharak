@@ -20,6 +20,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/terms-and-conditions', 'termsAndConditions')->name('termsAndConditions');
     Route::get('/products', 'products')->name('products');
     Route::get('/product-details', 'productDetails')->name('productDetails');
+    Route::get('/subcategorywise/product/{id}', 'productsBySubcategory')->name('subcategorywise.product');
     Route::get('/orders', 'orders')->name('orders');
     Route::get('/account-details', 'accountDetails')->name('accountDetails');
 });
@@ -35,7 +36,8 @@ Route::controller(CartController::class)->group(function () {
 
 Route::controller(PaymentController::class)->group(function () {
     Route::get('/checkout', 'checkout')->name('checkout');
-    Route::post('/checkout/store', 'store')->name('checkout.store');
+    // Route::post('/checkout/store', 'store')->name('checkout.store');
+    Route::post('/checkout/process-payment', 'processPayment')->name('checkout.store');
 });
 Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile', 'profile')->name('profile');
