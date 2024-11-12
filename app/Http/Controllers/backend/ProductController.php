@@ -189,7 +189,7 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with(['images','attribute_value','attributes'])->find($id);
+        $product = Product::with(['images'])->find($id);
         if (!$product) {
             flash()->error(__('Product not found.'));
             return redirect()->back();
@@ -224,7 +224,7 @@ class ProductController extends Controller
 
 
         ]);
-        $product = Product::with('images','attribute_value','attributes')->findOrFail($id);
+        $product = Product::with('images')->findOrFail($id);
         if (!$product) {
             flash()->error(__('Product not found.'));
             return redirect()->back();

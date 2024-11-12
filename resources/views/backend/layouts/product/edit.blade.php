@@ -210,12 +210,11 @@
                                                         <button
                                                             onclick="showDeleteConfirm({{ $image->id }},this,'image','{{ $image }}')"
                                                             class="btn btn-denger btn-sm"
-                                                            style="border-radius: 30%; border: 0; background-color: #fb1c1c; color: #fff">
+                                                            style="border-radius: 20%; border: 0; background-color: #d9534f; color: #fff">
                                                             <i class='bx bx-x'></i>
                                                         </button>
                                                     </div>
-                                                    <img class="" style="width: 100%; height: 195px;"
-                                                        src="{{ asset($image->image_url) }}" alt="gallery image">
+                                                    <img class="object-cover" style="width: 100%; height: 100%;" src="{{ asset($image->image_url) }}" alt="gallery image">
                                                 </div>
                                             @endforeach
                                         @endif

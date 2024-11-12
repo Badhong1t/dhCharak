@@ -61,20 +61,22 @@
             <div class="section-text mt-3 mb-5">
                 {{ $product->short_description ?? '' }}
             </div>
-            {{--  @dd($product_attributes)
+            {{--  @dd($product_attributes)  --}}
             <div class="sizes-container">
                 <input id="product-size" value="" type="hidden" name="product-size">
                 <div class="title">Size:</div>
-                @if ($product_attributes->count() > 0)
-                    @foreach ($product_attributes as $key => $attribute_value)
+                @if ($product->attribute_values->count() > 0)
+                    @foreach ($product->attribute_values as $key => $attribute_value)
                         @if ($attribute_value->value->type === 'Size')
-                            <div id="{{ $attribute_value->value->id }}" class="size {{ $key == 0 ? 'active' : '' }}">
-                                {{ $attribute_value->value->value }}
+                            <div id="size-{{ $attribute_value->id }}" class="size {{ $key == 0 ? 'active' : '' }}">
+                                Size: {{ $attribute_value->value->value }}<br>
+                                Attribute ID: {{ $attribute_value->product_attribute_values->attribute_id }}<br>
+                                Attribute Value ID: {{ $attribute_value->product_attribute_values->attribute_value_id }}
                             </div>
                         @endif
                     @endforeach
                 @endif
-            </div>  --}}
+            </div>
 
             {{--  <div class="sizes-container mt-3">
                 <input id="product-color" value="" type="hidden" name="product-color">

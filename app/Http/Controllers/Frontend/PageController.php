@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+
 class PageController extends Controller
 {
 
@@ -24,7 +26,7 @@ class PageController extends Controller
 
         $product = Product::with(['images','attribute_values'])->where('slug', $slug)->first();
         $related_products = Product::where('category_id', $product->category_id)->limit(8)->get();
-        return view('frontend.layouts.product_details.index', compact('product', 'related_products', ));
+        return view('frontend.layouts.product_details.index', compact('product', 'related_products'));
 
     }
     public function productsBySubcategory($id){

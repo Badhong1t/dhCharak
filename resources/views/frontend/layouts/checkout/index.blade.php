@@ -16,7 +16,7 @@
     <section class=" checkout-section common-container log-in-section">
         <div class="tm-heading-back-btn d-flex align-items-center justify-content-between">
             <h1 class="common-heading">Checkout</h1>
-            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
+            <a href="{{ route('cart.index') }}"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16" fill="none">
                 <path d="M8 15L1 8M1 8L8 1M1 8H19" stroke="#3F3F46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg></a>
         </div>
@@ -30,12 +30,13 @@
                     </h2>
                 </div>
 
-                <form class="login-form tm-checkout-form" action="{{ route('checkout.store') }}" method="post">
+                <form class="login-form tm-checkout-form" action="{{ route('checkout.store') }}" method="POST">
                     @csrf
+
                     <!-- Full Name -->
                     <div class="tm-input-group">
                         <label for="fullName">Full Name<span>*</span></label>
-                        <input type="text" id="name" placeholder="Adam Smith" name="name" value="{{ Auth::user()->first_name }}">
+                        <input type="text" id="name" placeholder="Adam Smith" name="name" value="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}" class="@error('name') is-invalid @enderror">
                     </div>
 
                     <!-- Island Selection -->
@@ -115,7 +116,7 @@
                     <!-- Phone Number -->
                     <div class="tm-input-group">
                         <label for="phone">Phone Number<span>*</span></label>
-                        <input type="tel" name="phone" id="phone" placeholder="+1 234-567-890" class="@error('phone') is-invalid @enderror">
+                        <input type="tel" name="phone" id="phone" class="@error('phone') is-invalid @enderror">
                         @error('phone')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -144,17 +145,17 @@
                     <!-- Card Number -->
                     <div class="tm-input-group">
                         <label for="cardNumber">Card Number<span>*</span></label>
-                        <input type="text" name="card_number" id="cardNumber" placeholder="•••• •••• •••• 0932">
+                        <input type="text" name="card_number" id="cr_no" placeholder="•••• •••• •••• 0932" maxlength="19">
                     </div>
 
                     <!-- Expiration Date & Security Code -->
                     <div class="tm-input-group">
                         <label for="expirationDate">Expiration Date (MM/YY)<span>*</span></label>
-                        <input type="text" id="expirationDate" placeholder="12/24" name="expiration_date">
+                        <input type="text" name="expiration_date" id="exp" placeholder="MM/YY" minlength="5" maxlength="5">
                     </div>
                     <div class="tm-input-group">
-                        <label for="securityCode">Amount<span>*</span></label>
-                        <input type="text" id="securityCode" placeholder="••••" name="amount">
+                        <label for="securityCode">CVV<span>*</span></label>
+                        <input type="text" id="securityCode" placeholder="cvv" name="cvv" maxlength="4">
                     </div>
 
                     <!-- Name on Card -->
@@ -164,7 +165,7 @@
                     </div>
                    </div>
 
-                    <button type="submit" class="common-btn-2 w-100" id="submitBtn">Pay Now</button>
+                   <button type="submit" class="common-btn-2 w-100" id="submitBtn">Pay Now</button>
                 </form>
             </div>
 
@@ -184,7 +185,54 @@
     <script>
         const input = document.querySelector("#phone");
         window.intlTelInput(input, {
+            initialCountry: "us",
             loadUtilsOnInit: "https://cdn.jsdelivr.net/npm/intl-tel-input@24.7.0/build/js/utils.js",
         });
+        //For Card Number formatted input
+        var cardNum = document.getElementById('cr_no');
+        cardNum.onkeyup = function (e) {
+            if (this.value == this.lastValue) return;
+            var caretPosition = this.selectionStart;
+            var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+            var parts = [];
+
+            for (var i = 0, len = sanitizedValue.length; i < len; i += 4) {
+                parts.push(sanitizedValue.substring(i, i + 4));
+            }
+
+            for (var i = caretPosition - 1; i >= 0; i--) {
+                var c = this.value[i];
+                if (c < '0' || c > '9') {
+                    caretPosition--;
+                }
+            }
+            caretPosition += Math.floor(caretPosition / 4);
+
+            this.value = this.lastValue = parts.join(' ');
+            this.selectionStart = this.selectionEnd = caretPosition;
+        }
+        //For Date formatted input
+        var expDate = document.getElementById('exp');
+        expDate.onkeyup = function (e) {
+            if (this.value == this.lastValue) return;
+            var caretPosition = this.selectionStart;
+            var sanitizedValue = this.value.replace(/[^0-9]/gi, '');
+            var parts = [];
+
+            for (var i = 0, len = sanitizedValue.length; i < len; i += 2) {
+                parts.push(sanitizedValue.substring(i, i + 2));
+            }
+
+            for (var i = caretPosition - 1; i >= 0; i--) {
+                var c = this.value[i];
+                if (c < '0' || c > '9') {
+                    caretPosition--;
+                }
+            }
+            caretPosition += Math.floor(caretPosition / 2);
+
+            this.value = this.lastValue = parts.join('/');
+            this.selectionStart = this.selectionEnd = caretPosition;
+        }
     </script>
 @endpush
