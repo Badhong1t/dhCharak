@@ -22,7 +22,7 @@
 @section('content')
 <main>
     <section class="handling-goods-section section-padding-x m-top m-bottom">
-      <h3 class="handling-goods-heading">Handling Frozen & Refrigerated Goods</h3>
+      <h3 class="handling-goods-heading">{{ $dataStatic->title }}</h3>
       <div class="handling-goods-content-wrapper">
           <div class="handling-goods-content-left">
               <div class="handling-goods-content-left-img-area">
@@ -31,13 +31,13 @@
           </div>
           <div class="handling-goods-content-right">
               <div class="handling-goods-content-right-wrapper">
-                  <p class="common-para">At Bulksail, we ensure that frozen and refrigerated products are handled with the utmost care. Our specialized logistics process includes temperature-controlled shipping to ensure that perishable items arrive fresh and in optimal condition.
+                  <p class="common-para">{!! $dataStatic->description !!}
                   </p>
-                  <p class="common-para"><span>Order Placement:</span> Frozen and refrigerated items are clearly marked and processed with special handling requirements.
-                  </p>
-                  <p class="common-para"><span>Temperature-Controlled Shipping:</span> We use refrigerated containers for transporting frozen and perishable goods, maintaining the correct temperatures from our distributors in Puerto Rico to the dispatch warehouses.
-                  </p>
-                  <p class="common-para"><span>Island-Wide Delivery:</span> Frozen and refrigerated items are delivered to dispatch warehouses in St. Thomas, St. Croix, Tortola, and St. Maarten, ready for pickup in optimal condition.</p>
+
+                  @foreach ($dataDynamic as $data)
+                  <p class="common-para"><span>{{ $data->sub_title }}:</span> {!! $data->short_description !!}</p>
+                  @endforeach
+
               </div>
               <a href="{{ route('home') }}" class="common-btn-2">
                   Start Shopping

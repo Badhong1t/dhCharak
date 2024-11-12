@@ -50,7 +50,7 @@ class HowDeliveryWorks extends Controller
         $request->validate([
 
             'title' => 'string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
 
         ]);
 
@@ -70,9 +70,9 @@ class HowDeliveryWorks extends Controller
     public function updateImages(Request $request)
     {
         $request->validate([
-            'image1' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-            'image2' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-            'image3' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'image1' => 'required|image|mimes:png,jpg,jpeg|max:3072',
+            'image2' => 'required|image|mimes:png,jpg,jpeg|max:3072',
+            'image3' => 'required|image|mimes:png,jpg,jpeg|max:3072',
         ]);
 
         // Create an associative array for image fields and their section names

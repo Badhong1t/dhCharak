@@ -46,7 +46,7 @@ class PickupInstructions extends Controller
         $request->validate([
 
             'title' => 'string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
 
         ]);
 

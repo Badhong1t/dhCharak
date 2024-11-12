@@ -78,7 +78,7 @@ class HandlingFrozenGoods extends Controller
         $request->validate([
 
             'sub_title' => 'string|max:255',
-            'short_description' => 'string|max:255',
+            'short_description' => 'string|max:600',
 
         ]);
 
@@ -136,7 +136,7 @@ class HandlingFrozenGoods extends Controller
         $request->validate([
 
             'sub_title' => 'string|max:255',
-            'short_description' => 'string|max:255',
+            'short_description' => 'string|max:600',
 
         ]);
 
@@ -171,8 +171,8 @@ class HandlingFrozenGoods extends Controller
         $request->validate([
 
             'title' => 'string|max:255',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:3072',
+            'description' => 'required|string',
 
         ]);
 

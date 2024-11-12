@@ -24,31 +24,24 @@
     <section class="pickup-location-section section-padding-x m-top m-bottom">
       <div class="pickup-location-content-wrapper">
           <div class="pickup-location-content-left">
-              <h3 class="pickup-location-heading">Pickup Instructions</h3>
-              <p class="pickup-location-para common-para">Once your order is ready, you can pick it up from the designated dispatch
-                  warehouse on your destination island</p>
-              <div class="pickup-location-content-right-wrapper">
-                  <p class="common-para"><span class="pickup-location-span">Step-by-Step Instructions</span> </p>
-                  <p class="common-para"> 1. Bring a copy of your order confirmation or receipt.</p>
-                  <p class="common-para"> 2. Provide a valid ID for verification.</p>
-                  <p class="common-para"> 3. Pickup is available during warehouse business hours: (Insert hours of operation for each island)</p>
-              </div>
+              <h3 class="pickup-location-heading">{{ $data->title }}</h3>
+              <p class="pickup-location-para common-para">{!! $data->description !!}</p>
           </div>
           <div class="pickup-location-content-right">
               <div class="pickup-location-content-left-img-area">
                   <div class="pickup-location-content-left-img-area-div">
                       <div class="pickup-location-image-area">
-                          <img src="{{ asset('frontend/assets/images/pickup-2.png') }}" alt="" srcset="">
+                          <img src="{{ asset($image1->image) }}" alt="" srcset="">
                       </div>
 
                       <div class="pickup-location-image-area">
-                          <img src="{{ asset('frontend/assets/images/pickup-3.png') }}" alt="" srcset="">
+                          <img src="{{ asset($image2->image) }}" alt="" srcset="">
                       </div>
 
                   </div>
                   <div class="pickup-location-content-left-img-area-div">
                       <div class="pickup-location-image-area">
-                          <img src="{{ asset('frontend/assets/images/pickup-1.png') }}" alt="" srcset="">
+                          <img src="{{ asset($image3->image) }}" alt="" srcset="">
                       </div>
                   </div>
               </div>

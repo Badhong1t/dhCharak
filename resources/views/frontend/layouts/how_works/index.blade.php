@@ -26,11 +26,10 @@
             <div class="special-order-content">
                 <div class="common-heading-wrapper">
                     <h2 class="common-heading text-center mb_15">
-                        How It Works
+                        {{ $dataStatic2->title }}
                     </h2>
                     <p class="common-para-2 text-center">
-                        Connecting you directly to distributors with
-                        ease
+                        {{ $dataStatic2->short_description }}
                     </p>
                     <div class="how-it-works-item-wrapper">
                         <!-- item-1 -->
@@ -229,26 +228,16 @@
 
     <section class="why-choose-section mb_100">
         <h2 class="common-heading text-center mb_60">
-            Why Choose Bulksail?
+            {{ $dataStatic->title }}
         </h2>
         <div class="section-padding-x tm-why-choss-div">
             <div class="why-choose-bulksail-content-wrapper">
-                <div class="why-choose-item ">
-                    <h4>Direct Access to Distributors</h4>
-                    <p class="common-para">Skip the middlemen and buy directly from trusted distributors in Puerto Rico. We ensure you get the best deals and highest-quality products for your business or household.</p>
+                @foreach($dataDynamic as $item)
+                <div class="why-choose-item">
+                    <h4>{{ $item->sub_title }}</h4>
+                    <p class="common-para">{!! $item->description !!}</p>
                 </div>
-                <div class="why-choose-item ">
-                    <h4>Direct Access to Distributors</h4>
-                    <p class="common-para">Skip the middlemen and buy directly from trusted distributors in Puerto Rico. We ensure you get the best deals and highest-quality products for your business or household.</p>
-                </div>
-                <div class="why-choose-item ">
-                    <h4>Direct Access to Distributors</h4>
-                    <p class="common-para">Skip the middlemen and buy directly from trusted distributors in Puerto Rico. We ensure you get the best deals and highest-quality products for your business or household.</p>
-                </div>
-                <div class="why-choose-item ">
-                    <h4>Direct Access to Distributors</h4>
-                    <p class="common-para">Skip the middlemen and buy directly from trusted distributors in Puerto Rico. We ensure you get the best deals and highest-quality products for your business or household.</p>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
