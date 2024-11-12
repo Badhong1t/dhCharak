@@ -43,4 +43,3 @@ Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile', 'profile')->name('profile');
     Route::get('/user/logout', 'logout')->name('user.logout');
 });
-

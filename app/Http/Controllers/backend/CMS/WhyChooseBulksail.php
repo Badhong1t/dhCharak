@@ -194,7 +194,7 @@ class WhyChooseBulksail extends Controller
 
 
 
-        CMS::updateOrCreate(['page' => page::HowItWorks], [
+        CMS::updateOrCreate(['page' => page::HowItWorks, 'section_name' => section::WhyChooseBulksailSectionStatic], [
 
             'page' => page::HowItWorks,
             'section_name' => section::WhyChooseBulksailSectionStatic,

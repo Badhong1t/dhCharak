@@ -202,7 +202,7 @@ class HowItWork extends Controller
 
 
 
-        CMS::updateOrCreate(['page' => page::HowItWorks], [
+        CMS::updateOrCreate(['page' => page::HowItWorks, 'section_name' => section::HowItWorksSectionStatic], [
 
             'page' => page::HowItWorks,
             'section_name' => section::HowItWorksSectionStatic,

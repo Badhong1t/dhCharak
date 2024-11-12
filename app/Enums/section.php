@@ -7,6 +7,8 @@ use Rexlabs\Enum\Enum;
 
 class section extends Enum
 {
+    const TitleStaticContent = 'Title Static Content';
+
     const HandlingFrozenGoodsStatic = 'Handling Frozen Goods Static';
 
     const HandlingFrozenGoodsDynamic = 'Handling Frozen Goods Dynamic';

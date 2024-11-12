@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\backend\AttributesController;
+
 use App\Http\Controllers\backend\AttributeValueController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CMS\HandlingFrozenGoods;
 use App\Http\Controllers\backend\CMS\HowDeliveryWorks;
 use App\Http\Controllers\backend\CMS\HowItWork;
+use App\Http\Controllers\backend\CMS\HowWorkTitle;
 use App\Http\Controllers\backend\CMS\PickupInstructions;
 use App\Http\Controllers\backend\CMS\SpecialOrders;
+use App\Http\Controllers\backend\CMS\StayConnectedWithBulksail;
 use App\Http\Controllers\backend\CMS\WhyChooseBulksail;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
@@ -17,6 +20,8 @@ use App\Http\Controllers\backend\settings\SocialLinkController;
 use App\Http\Controllers\backend\settings\SystemController;
 use App\Http\Controllers\backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -102,3 +107,8 @@ Route::get('/pickupInstructions', [PickupInstructions::class, 'index'])->name('p
 Route::post('/pickupInstructions/update', [PickupInstructions::class, 'pickupInstructionsUpdate'])->name('pickupInstructionsUpdate');
 Route::post('/pickupInstructionsImage/update', [PickupInstructions::class, 'updateImages'])->name('pickupInstructionsImage.update');
 
+Route::get('/stayConnectedWithBulksail', [StayConnectedWithBulksail::class, 'index'])->name('stayConnectedWithBulksail');
+Route::post('/stayConnectedWithBulksail/update', [StayConnectedWithBulksail::class, 'stayConnectedUpdate'])->name('stayConnectedUpdate');
+
+Route::get('/howWorksTitle', [HowWorkTitle::class, 'index'])->name('howWorksTitle');
+Route::post('/howWorksTitle/update', [HowWorkTitle::class, 'howWorksTitleUpdate'])->name('howWorksTitleUpdate');

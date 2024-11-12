@@ -7,6 +7,9 @@ use Rexlabs\Enum\Enum;
 
 class page extends Enum
 {
+
+    const Homepage = 'Homepage';
+
     const HandlingFrozenGoods = 'Handling Frozen & Refregerator Goods';
 
     const Pickup = 'Pickup Instruction & Locations';

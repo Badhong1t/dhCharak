@@ -143,6 +143,11 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
+                    <a href="{{ route('stayConnectedWithBulksail') }}" class="menu-link">
+                        <div data-i18n="Container">Stay Connected With Bulksail</div>
+                    </a>
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('specialOrders.index') }}" class="menu-link">
                         <div data-i18n="Container">Special Orders</div>
                     </a>
@@ -166,20 +171,29 @@
                     <a href="{{ route('howDeliveryWorks') }}" class="menu-link">
                         <div data-i18n="Notifications">How Delivery Works</div>
                     </a>
-                </li><li class="menu-item">
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('howWorksTitle') }}" class="menu-link">
+                        <div data-i18n="Notifications">How Works Title</div>
+                    </a>
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('howItWorks.index') }}" class="menu-link">
                         <div data-i18n="Notifications">How It Works</div>
                     </a>
-                </li><li class="menu-item">
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('whyChooseBulksail.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Why Choose Bulksail</div>
                     </a>
-                </li><li class="menu-item">
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('handlingFrozenGoods.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Handling Frozen Goods</div>
                     </a>
                 </li>
             </ul>
+
         </li>
 
         {{-- CMS page ends here --}}

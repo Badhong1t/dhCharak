@@ -120,10 +120,10 @@
     <!-- newsletter start -->
      <div class="newsletter section-padding-x m-top m-bottom">
        <div class="section-title text-center">
-        Stay Connected with Bulksail
+        {{ $data->title }}
        </div>
        <div style="max-width: 803px;" class=" mx-auto w-100 text-center mt-4 section-text">
-        Sign up to be the first to hear about exclusive offers, new product arrivals, and important updates. Join our community and get the latest deals delivered straight to your inbox.
+        {!! $data->short_description !!}
        </div>
        <div class="d-flex justify-content-center mt-5" >
         <a href="./sign-up.html" class="section-btn mt-4">Sign up</a>

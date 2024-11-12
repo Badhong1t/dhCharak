@@ -27,71 +27,31 @@
                 <div class="special-order-content">
                     <div class="common-heading-wrapper">
                         <h2 class="common-heading text-center mb_15">
-                            Special Orders
+                            {{ $dataStatic->title ?? '' }}
                         </h2>
                         <p class="common-para-2 text-center">
-                            Can't find what you're looking for? Let us help you source your product!
+                            {{ $dataStatic->short_description ?? '' }}
                         </p>
                     </div>
                     <div class="special-order-card-wrapper pb_60 pt_60">
+
                         <!-- item-1 -->
-                        <div class="special-order-card-item">
-                            <div class="special-order-card-img-wrapper d-flex justify-content-between align-items-center">
-                                <img src="{{ asset('frontend/assets/images/submit-request.svg') }}" alt="" srcset="">
-                                <img src="{{ asset('frontend/assets/images/Arrow.png') }}" alt="" srcset="">
+                        @foreach ($dataDynamic as $item)
+                            <div class="special-order-card-item">
+                                <div
+                                    class="special-order-card-img-wrapper d-flex justify-content-between align-items-center">
+                                    <img src="{{ asset($item->image) }}" alt="">
+                                    <img src="{{ asset('frontend/assets/images/Arrow.png') }}" alt="">
+                                </div>
+                                <h3 class="common-para fw-700">
+                                    {{ $item->title }}
+                                </h3>
+                                <p class="common-para">
+                                    {{ $item->description }}
+                                </p>
                             </div>
-                            <h3 class="common-para fw-700">
-                                Submit Your Request
-                            </h3>
-                            <p class="common-para">
-                                Tell us what you're looking for by filling out the form. Include details about the product,
-                                quantity, and your destination island. If needed, you can upload an image or document to
-                                help us understand your request better.
-                            </p>
-                        </div>
-                        <!-- item-2 -->
-                        <div class="special-order-card-item">
-                            <div class="special-order-card-img-wrapper d-flex justify-content-between align-items-center">
-                                <img src="{{ asset('frontend/assets/images/source.svg') }}" alt="" srcset="">
-                                <img src="{{ asset('frontend/assets/images/Arrow.png') }}" alt="" srcset="">
-                            </div>
-                            <h3 class="common-para fw-700">
-                                We'll Source Your Product
-                            </h3>
-                            <p class="common-para">
-                                Once we receive your request, our team will search through our network of distributors to
-                                find the product for you. We'll get back to you with a detailed quote, including pricing and
-                                shipping information.
-                            </p>
-                        </div>
-                        <!-- item-3 -->
-                        <div class="special-order-card-item">
-                            <div class="special-order-card-img-wrapper d-flex justify-content-between align-items-center">
-                                <img src="{{ asset('frontend/assets/images/review-confirm.svg') }}" alt="" srcset="">
-                                <img src="{{ asset('frontend/assets/images/Arrow.png') }}" alt="" srcset="">
-                            </div>
-                            <h3 class="common-para fw-700">
-                                Review and Confirm Your Order
-                            </h3>
-                            <p class="common-para">
-                                Review the quote, and if you're happy with the pricing and details, confirm your order.
-                                After confirmation, you'll need to make the payment so we can begin processing your order
-                            </p>
-                        </div>
-                        <!-- item-4-->
-                        <div class="special-order-card-item">
-                            <div class="special-order-card-img-wrapper d-flex justify-content-between align-items-center">
-                                <img src="{{ asset('frontend/assets/images/handle.svg') }}" alt="" srcset="">
-                                <img class="d-none" src="{{ asset('frontend/assets/images/Arrow.png') }}" alt="" srcset="">
-                            </div>
-                            <h3 class="common-para fw-700">
-                                We Handle the Rest
-                            </h3>
-                            <p class="common-para">
-                                Once your payment is complete, we'll take care of everything—from arranging shipping to
-                                delivering your product to your destination island.
-                            </p>
-                        </div>
+                        @endforeach
+
                     </div>
                     <a href="{{ route('specialOrdersForm') }}" class="common-btn d-flex mx-auto">Request Form</a>
                 </div>

@@ -25,14 +25,9 @@
         class="pickup-location-section section-padding-x m-top m-bottom">
         <div class="pickup-location-content-wrapper">
             <div class="pickup-location-content-left">
-                <h3 class="pickup-location-heading">How Delivery
-                    Works</h3>
-                <p class="pickup-location-para common-para">Once you
-                    place your order, we arrange for delivery from our
-                    distributors in Puerto Rico to your destination
-                    island. You will be notified when your order is
-                    ready for pickup at your designated warehouse</p>
-                <div class="pickup-location-content-right-wrapper">
+                <h3 class="pickup-location-heading">{{ $data->title ?? '' }}</h3>
+                <p class="pickup-location-para common-para">{!! $data->description ?? '' !!}</p>
+                <div class="pickup-location-content-right-wrapper" style="margin-top: 20px;">
                     <p class="common-para"> <span class="mr_5"><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="10" height="10"
@@ -69,13 +64,13 @@
                         class="pickup-location-content-left-img-area-div">
                         <div class="pickup-location-image-area">
                             <img
-                                src="{{ asset('frontend/assets/images/delivery-img-1.png') }}"
+                                src="{{ asset($image1->image) }}"
                                 alt="Dekivery Img" srcset>
                         </div>
 
                         <div class="pickup-location-image-area">
                             <img
-                                src="{{ asset('frontend/assets/images/delivery-img-2.png') }}"
+                                src="{{ asset($image2->image) }}"
                                 alt="Dekivery Img" srcset>
                         </div>
 
@@ -84,7 +79,7 @@
                         class="pickup-location-content-left-img-area-div">
                         <div class="pickup-location-image-area">
                             <img
-                                src="{{ asset('frontend/assets/images/delivery-img-3.png') }}"
+                                src="{{ asset($image3->image) }}"
                                 alt="Dekivery Img" srcset>
                         </div>
                     </div>
