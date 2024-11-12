@@ -36,7 +36,8 @@ Route::controller(CartController::class)->group(function () {
 
 Route::controller(PaymentController::class)->group(function () {
     Route::get('/checkout', 'checkout')->name('checkout');
-    Route::post('/checkout/store', 'store')->name('checkout.store');
+    // Route::post('/checkout/store', 'store')->name('checkout.store');
+    Route::post('/checkout/process-payment', 'processPayment')->name('checkout.store');
 });
 Route::controller(ProfileController::class)->group(function () {
     Route::get('/profile', 'profile')->name('profile');

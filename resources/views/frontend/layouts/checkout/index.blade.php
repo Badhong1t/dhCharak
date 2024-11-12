@@ -4,6 +4,7 @@
 
 @push('styles')
     <!-- ==== All Css Links ==== -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.7.0/build/css/intlTelInput.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/plugins/aos.css') }}" />
     <!-- All custom CSS Links -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/helper.css') }}" />
@@ -152,8 +153,8 @@
                         <input type="text" id="expirationDate" placeholder="12/24" name="expiration_date">
                     </div>
                     <div class="tm-input-group">
-                        <label for="securityCode">Security Code<span>*</span></label>
-                        <input type="text" id="securityCode" placeholder="••••" name="security_code">
+                        <label for="securityCode">Amount<span>*</span></label>
+                        <input type="text" id="securityCode" placeholder="••••" name="amount">
                     </div>
 
                     <!-- Name on Card -->
@@ -179,4 +180,11 @@
 @push('scripts')
     <!-- ==== All Js Links ==== -->
     <script src="{{ asset('frontend/assets/js/tarek.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.7.0/build/js/intlTelInput.min.js"></script>
+    <script>
+        const input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+            loadUtilsOnInit: "https://cdn.jsdelivr.net/npm/intl-tel-input@24.7.0/build/js/utils.js",
+        });
+    </script>
 @endpush
