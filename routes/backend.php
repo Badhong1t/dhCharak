@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\backend\AttributesController;
+
+use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\AttributeValueController;
 use App\Http\Controllers\backend\CategoryController;
 // use App\Http\Controllers\backend\AttributesController;
@@ -10,13 +12,13 @@ use App\Http\Controllers\backend\CMS\HowItWork;
 use App\Http\Controllers\backend\CMS\PickupInstructions;
 use App\Http\Controllers\backend\CMS\SpecialOrders;
 use App\Http\Controllers\backend\CMS\WhyChooseBulksail;
-use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\backend\settings\DynamicPageController;
 use App\Http\Controllers\backend\settings\ProfileController;
 use App\Http\Controllers\backend\settings\SocialLinkController;
 use App\Http\Controllers\backend\settings\SystemController;
 use App\Http\Controllers\backend\SubCategoryController;
+use App\Http\Controllers\Backend\TempImageController;
 use App\Models\DynamicPage;
 use Illuminate\Support\Facades\Route;
 
@@ -109,3 +111,7 @@ Route::get('/pickupInstructions', [PickupInstructions::class, 'index'])->name('p
 Route::post('/pickupInstructions/update', [PickupInstructions::class, 'pickupInstructionsUpdate'])->name('pickupInstructionsUpdate');
 Route::post('/pickupInstructionsImage/update', [PickupInstructions::class, 'updateImages'])->name('pickupInstructionsImage.update');
 
+//temp-images.create routes
+Route::post('/temp-images/create', [TempImageController::class, 'create'])->name('temp-images.create');
+
+Route::get('/get-attribute-value/{id}', [AttributeValueController::class, 'getattributeValues'])->name('get-attribute-value');

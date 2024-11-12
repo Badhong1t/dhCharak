@@ -176,20 +176,24 @@
                     <a href="{{ route('howDeliveryWorks') }}" class="menu-link">
                         <div data-i18n="Notifications">How Delivery Works</div>
                     </a>
-                </li><li class="menu-item">
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('howItWorks.index') }}" class="menu-link">
                         <div data-i18n="Notifications">How It Works</div>
                     </a>
-                </li><li class="menu-item">
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('whyChooseBulksail.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Why Choose Bulksail</div>
                     </a>
-                </li><li class="menu-item">
+                </li>
+                <li class="menu-item">
                     <a href="{{ route('handlingFrozenGoods.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Handling Frozen Goods</div>
                     </a>
                 </li>
             </ul>
+
         </li>
 
         {{-- CMS page ends here --}}
